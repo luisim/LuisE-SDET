@@ -10,11 +10,15 @@ jobs:
   update-badge:
     name: Update Test Status
     runs-on: ubuntu-latest
-    if: github.event.workflow_run.event == 'push'
+    # Only run on PR events to avoid errors on direct pushes
+    if: github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion != 'cancelled'
     
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_branch }}
+          token: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Determine test status
         id: status
@@ -27,17 +31,34 @@ jobs:
             echo "color=red" >> $GITHUB_OUTPUT
           fi
       
-      - name: Comment PR status
-        if: github.event.workflow_run.pull_requests != ''
+      - name: Get PR number
+        id: pr
         uses: actions/github-script@v7
         with:
           script: |
-            const status = '${{ steps.status.outputs.status }}';
-            const color = '${{ steps.status.outputs.color }}';
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
+            const { data: pulls } = await github.rest.pulls.list({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `## 🧪 Test Status: ${status}\n\nTests completed with status: **${status}**`
+              head: `${context.repo.owner}:${{ github.event.workflow_run.head_branch }}`,
+              state: 'open'
             });
+            if (pulls.length > 0) {
+              core.setOutput('number', pulls[0].number.toString());
+            }
+      
+      - name: Comment PR status
+        if: steps.pr.outputs.number != ''
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const prNumber = '${{ steps.pr.outputs.number }}';
+            const status = '${{ steps.status.outputs.status }}';
+            if (prNumber && prNumber !== '') {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: parseInt(prNumber),
+                body: `## 🧪 Test Status: ${status}\n\nTests completed with status: **${status}**\n\n[View workflow run](${{ github.event.workflow_run.html_url }})`
+              });
+            }
 
