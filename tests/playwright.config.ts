@@ -82,7 +82,7 @@ export default defineConfig({
   ],
 
   /* Run your local dev server before starting the tests */
-  // Commented out to allow manual server control
+  // Disabled for CI - server is started in GitHub Actions
   // webServer: {
   //   command: 'cd .. && python3 -m http.server 8000',
   //   url: 'http://localhost:8000',

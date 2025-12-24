@@ -2,6 +2,9 @@
 
 A beautiful, interactive CV/portfolio website template with a modern dark theme, animated space background, and comprehensive test automation framework.
 
+![E2E Tests](https://github.com/luisim/LuisE-SDET/workflows/E2E%20Tests/badge.svg)
+![Code Quality](https://github.com/luisim/LuisE-SDET/workflows/Code%20Quality/badge.svg)
+
 ## ✨ Features
 
 - 🎨 **Modern Dark Theme** - Beautiful dark mode with animated No Man's Sky-inspired starfield
@@ -129,10 +132,11 @@ This template includes a complete test automation framework demonstrating best p
 - **TypeScript** for type safety
 - **Playwright** for browser automation
 - **Proper element identification** using `data-testid` attributes
+- **CI/CD Integration** with GitHub Actions
 
 See `tests/README.md` for complete documentation.
 
-### Running Tests
+### Running Tests Locally
 
 ```bash
 cd tests
@@ -140,6 +144,16 @@ npm install
 npx playwright install
 npm test
 ```
+
+### CI/CD Pipeline
+
+The repository includes GitHub Actions workflows for:
+- ✅ **Automated E2E Testing** - Multi-browser testing on every push/PR
+- ✅ **Code Quality Checks** - ESLint and Prettier validation
+- ✅ **Automated Deployment** - GitHub Pages deployment
+- ✅ **Test Reports** - HTML reports with screenshots and videos
+
+See `.github/workflows/` for workflow configurations.
 
 ## 🌐 Deployment
 

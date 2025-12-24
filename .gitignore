@@ -33,6 +33,10 @@ setup-github.sh
 FILES-TO-EXCLUDE.md
 COMMIT-GUIDE.md
 
+# GitHub Actions (keep workflows, exclude local artifacts)
+.github/workflows/*.log
+.github/workflows/.env
+
 # Logs
 *.log
 npm-debug.log*
