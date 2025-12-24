@@ -1,0 +1,75 @@
+# Dependencies
+node_modules/
+tests/node_modules/
+package-lock.json
+tests/package-lock.json
+
+# Test results and reports (keep test code, exclude results)
+test-results/
+playwright-report/
+tests/test-results/
+tests/playwright-report/
+*.webm
+*.png
+test-results.json
+
+# Old React/Vite setup (not needed for static site)
+src/
+vite.config.js
+tailwind.config.js
+postcss.config.js
+package.json
+package-lock.json
+
+# Deployment guides and scripts (too specific for public template)
+PRE-DEPLOYMENT-CHECKLIST.md
+DEPLOYMENT.md
+GITHUB-DEPLOYMENT.md
+PUSH-TO-GITHUB.md
+prepare-for-github.sh
+deploy-to-netlify.sh
+start-server.sh
+setup-github.sh
+FILES-TO-EXCLUDE.md
+COMMIT-GUIDE.md
+
+# Logs
+*.log
+npm-debug.log*
+/tmp/http-server.log
+
+# OS files
+.DS_Store
+Thumbs.db
+._*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-*
+
+# Build outputs
+dist/
+build/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.cache
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Scripts output
+*.sh.log
