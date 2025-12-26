@@ -3,9 +3,11 @@ name: E2E Tests
 on:
   push:
     branches: [ main, develop ]
+    # Run tests on every push to main/develop
   pull_request:
     branches: [ main, develop ]
-  workflow_dispatch: # Allows manual triggering
+    # Run tests on every PR to main/develop
+  workflow_dispatch: # Allows manual triggering from Actions tab
 
 jobs:
   test:
@@ -46,7 +48,12 @@ jobs:
         working-directory: ./tests
       
       - name: Install dependencies
-        run: npm ci
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
         working-directory: ./tests
       
       - name: Start local server
@@ -131,7 +138,12 @@ jobs:
           path: tests/test-results
       
       - name: Install dependencies
-        run: npm ci
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
         working-directory: ./tests
       
       - name: Generate HTML report
@@ -178,7 +190,12 @@ jobs:
         working-directory: ./tests
       
       - name: Install dependencies
-        run: npm ci
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
         working-directory: ./tests
       
       - name: Start local server

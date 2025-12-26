@@ -147,13 +147,17 @@ npm test
 
 ### CI/CD Pipeline
 
-The repository includes GitHub Actions workflows for:
-- ✅ **Automated E2E Testing** - Multi-browser testing on every push/PR
+The repository includes GitHub Actions workflows that run **automatically on every push**:
+
+- ✅ **Automated E2E Testing** - Multi-browser testing (Chromium, Firefox, WebKit)
 - ✅ **Code Quality Checks** - ESLint and Prettier validation
 - ✅ **Automated Deployment** - GitHub Pages deployment
 - ✅ **Test Reports** - HTML reports with screenshots and videos
+- ✅ **Test Artifacts** - Screenshots and videos on failure
 
-See `.github/workflows/` for workflow configurations.
+**View test results:** Go to the **Actions** tab in your GitHub repository
+
+See `.github/workflows/` for workflow configurations and `TESTING.md` for detailed testing guide.
 
 ## 🌐 Deployment
 
