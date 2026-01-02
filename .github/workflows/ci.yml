@@ -43,24 +43,25 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-npm-
       
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps ${{ matrix.browser }}
-        working-directory: ./tests
-      
       - name: Install dependencies
         run: |
+          cd tests
           if [ -f package-lock.json ]; then
             npm ci
           else
             npm install
           fi
-        working-directory: ./tests
+      
+      - name: Install Playwright Browsers
+        run: |
+          cd tests
+          npx playwright install --with-deps ${{ matrix.browser }}
       
       - name: Start local server
         run: |
-          cd ..
           python3 -m http.server 8000 &
           echo "Server started on port 8000"
+          sleep 2
         env:
           PORT: 8000
       
@@ -69,8 +70,9 @@ jobs:
           timeout 30 bash -c 'until curl -f http://localhost:8000/index.html; do sleep 1; done' || exit 1
       
       - name: Run Playwright tests
-        run: npm test -- --project=${{ matrix.browser }}
-        working-directory: ./tests
+        run: |
+          cd tests
+          npm test -- --project=${{ matrix.browser }}
         env:
           BASE_URL: http://localhost:8000
         continue-on-error: false
@@ -139,16 +141,17 @@ jobs:
       
       - name: Install dependencies
         run: |
+          cd tests
           if [ -f package-lock.json ]; then
             npm ci
           else
             npm install
           fi
-        working-directory: ./tests
       
       - name: Generate HTML report
-        run: npm run test:report
-        working-directory: ./tests
+        run: |
+          cd tests
+          npm run test:report
         continue-on-error: true
       
       - name: Upload HTML report
@@ -185,24 +188,25 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-npm-
       
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps chromium
-        working-directory: ./tests
-      
       - name: Install dependencies
         run: |
+          cd tests
           if [ -f package-lock.json ]; then
             npm ci
           else
             npm install
           fi
-        working-directory: ./tests
+      
+      - name: Install Playwright Browsers
+        run: |
+          cd tests
+          npx playwright install --with-deps chromium
       
       - name: Start local server
         run: |
-          cd ..
           python3 -m http.server 8000 &
           echo "Server started on port 8000"
+          sleep 2
         env:
           PORT: 8000
       
@@ -211,8 +215,9 @@ jobs:
           timeout 30 bash -c 'until curl -f http://localhost:8000/index.html; do sleep 1; done' || exit 1
       
       - name: Run smoke tests
-        run: npm run test:smoke
-        working-directory: ./tests
+        run: |
+          cd tests
+          npm run test:smoke
         env:
           BASE_URL: http://localhost:8000
       

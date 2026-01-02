@@ -1570,12 +1570,23 @@
 
         /* Print Styles */
         @media print {
-            nav, .scroll-top, .download-btn {
-                display: none;
+            nav, .scroll-top, .download-btn, canvas#spaceCanvas {
+                display: none !important;
+            }
+
+            body {
+                background: white !important;
+                color: black !important;
             }
 
             .card {
                 page-break-inside: avoid;
+                background: white !important;
+                border: 1px solid #ddd !important;
+            }
+
+            * {
+                box-shadow: none !important;
             }
         }
     </style>
@@ -1831,7 +1842,7 @@
         </div>
     </div>
 
-    <button class="download-btn" id="download-pdf-btn" data-testid="download-pdf-btn" onclick="window.print()">📥 Download PDF</button>
+    <button class="download-btn" id="download-pdf-btn" data-testid="download-pdf-btn" onclick="downloadPDF()">📥 Download PDF</button>
     <button class="scroll-top" id="scrollTop" data-testid="scroll-top-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</button>
 
     <script>
@@ -2874,6 +2885,28 @@
                 hero.style.transform = `translateY(${rate}px)`;
             });
         }
+
+        // PDF Download function
+        window.downloadPDF = function() {
+            // Hide elements that shouldn't be in PDF
+            const elementsToHide = document.querySelectorAll('.download-btn, .scroll-top, canvas#spaceCanvas');
+            const originalDisplay = [];
+            
+            elementsToHide.forEach((el, index) => {
+                originalDisplay[index] = el.style.display;
+                el.style.display = 'none';
+            });
+            
+            // Trigger print dialog
+            window.print();
+            
+            // Restore elements after a short delay
+            setTimeout(() => {
+                elementsToHide.forEach((el, index) => {
+                    el.style.display = originalDisplay[index];
+                });
+            }, 1000);
+        };
         
         }); // End DOMContentLoaded
     </script>

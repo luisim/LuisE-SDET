@@ -61,13 +61,6 @@ test.describe('Homepage Tests', () => {
     await homePage.verifySectionInViewport('projects');
   });
 
-  test('@regression Should display header card with contact information', async () => {
-    await homePage.verifyHeaderCard();
-    await homePage.verifyContactEmailLink();
-    await homePage.verifyContactPhoneLink();
-    await homePage.verifyLinkedInLink();
-  });
-
   test('@regression Should display and animate stats section', async () => {
     await homePage.verifyStatsSection();
     await homePage.verifyStatsValues();

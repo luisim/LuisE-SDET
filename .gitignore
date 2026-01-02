@@ -36,6 +36,7 @@ COMMIT-GUIDE.md
 # GitHub Actions (keep workflows, exclude local artifacts)
 .github/workflows/*.log
 .github/workflows/.env
+.github/workflows/FIX-PACKAGE-LOCK.md
 
 # Logs
 *.log

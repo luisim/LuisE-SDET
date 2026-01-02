@@ -12,8 +12,10 @@ Tests run automatically on:
 
 ### Manually (Local Development)
 
+**⚠️ Important: Always run commands from the `tests/` directory!**
+
 ```bash
-# Navigate to tests directory
+# Navigate to tests directory (REQUIRED)
 cd tests
 
 # Install dependencies (first time only)
@@ -22,11 +24,21 @@ npm install
 # Install Playwright browsers (first time only)
 npx playwright install
 
-# Run all tests
+# Start local server (in separate terminal, from CV root)
+cd ..
+python3 -m http.server 8000
+
+# Back in tests directory, run all tests
 npm test
+
+# Run specific test file
+npx playwright test tests/homepage.spec.ts
 
 # Run tests in headed mode (see browser)
 npm run test:headed
+
+# Run specific test in headed mode
+npx playwright test tests/homepage.spec.ts --headed
 
 # Run only smoke tests
 npm run test:smoke

@@ -52,10 +52,75 @@ export class HomePage extends BasePage {
 
   /**
    * Navigate to home page
+   * Handles GitHub Pages URL normalization gracefully with fallback options
+   * GitHub Pages URLs are case-sensitive, so we try multiple formats
    */
   async navigate(): Promise<void> {
-    await this.page.goto('/');
-    await this.waitForPageReady();
+    // Try multiple URL formats for maximum compatibility
+    // Playwright will use baseURL from config, but we try explicit paths too
+    const urlOptions = [
+      '/index.html',  // Explicit index.html (most reliable)
+      '/',            // Root path (should work with baseURL)
+    ];
+    
+    let lastError: Error | null = null;
+    let lastResponse: any = null;
+    let lastUrl: string = '';
+    
+    for (const url of urlOptions) {
+      try {
+        const response = await this.page.goto(url, { 
+          waitUntil: 'networkidle',
+          timeout: 30000 
+        });
+        
+        lastUrl = url;
+        
+        if (response) {
+          const status = response.status();
+          if (status === 200 || status === 304) {
+            // Success! Wait for page to be ready
+            await this.waitForPageReady();
+            return;
+          }
+          lastResponse = { status, url: response.url() };
+        } else {
+          // Response is null but no error - might still be loading
+          // Check if page actually loaded by waiting for an element
+          try {
+            await this.page.waitForSelector('[data-testid="hero-section"]', { timeout: 10000 });
+            await this.waitForPageReady();
+            return;
+          } catch {
+            // Element not found, try next URL
+            continue;
+          }
+        }
+      } catch (error) {
+        lastError = error as Error;
+        // Try next URL format
+        continue;
+      }
+    }
+    
+    // If all attempts failed, get current URL for debugging
+    const currentURL = this.page.url();
+    const errorDetails = lastResponse 
+      ? `Last response: ${lastResponse.status} from ${lastResponse.url}`
+      : `Last error: ${lastError?.message || 'Unknown error'}`;
+    
+    throw new Error(
+      `Failed to navigate to homepage after trying ${urlOptions.length} URL formats.\n` +
+      `Tried relative paths: ${urlOptions.join(', ')}\n` +
+      `Current page URL: ${currentURL}\n` +
+      `${errorDetails}\n` +
+      `\nTroubleshooting:\n` +
+      `1. Verify baseURL in playwright.config.ts matches your GitHub Pages URL exactly (case-sensitive!)\n` +
+      `2. Repository name must be exactly: LuisE-SDET (check GitHub repository settings)\n` +
+      `3. Ensure GitHub Pages is enabled and deployed (Settings → Pages)\n` +
+      `4. Wait a few minutes after deployment (GitHub Pages can take time to propagate)\n` +
+      `5. Test URL manually in browser: https://luisim.github.io/LuisE-SDET/`
+    );
   }
 
   /**
@@ -63,6 +128,8 @@ export class HomePage extends BasePage {
    */
   async waitForPageReady(): Promise<void> {
     await this.helpers.waitForPageLoad();
+    // Wait for hero section to confirm page loaded (more reliable than navbar)
+    await this.helpers.waitForElementVisible('[data-testid="hero-section"]', 30000);
     await this.waitForElement('[data-testid="navbar"]');
     await this.helpers.waitForAnimations();
   }
