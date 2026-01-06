@@ -2663,53 +2663,78 @@
 
         // Render Certifications
         const certsGrid = document.getElementById('certsGrid');
-        certifications.forEach(cert => {
-            const item = document.createElement('div');
-            item.className = 'cert-item';
-            item.innerHTML = `
-                <div class="cert-icon">🏆</div>
-                <div>${cert}</div>
-            `;
-            certsGrid.appendChild(item);
-        });
+        if (certsGrid) {
+            certifications.forEach(cert => {
+                const item = document.createElement('div');
+                item.className = 'cert-item';
+                item.innerHTML = `
+                    <div class="cert-icon">🏆</div>
+                    <div>${cert}</div>
+                `;
+                certsGrid.appendChild(item);
+            });
+        }
 
-        // Testimonials Data
+        // Testimonials Data (LinkedIn Recommendations)
         const testimonials = [
             {
-                text: 'Luis is an exceptional SDET who consistently delivers high-quality automation solutions. His expertise in test architecture and CI/CD integration has been invaluable to our team.',
+                text: 'Luis is a standout team member with a positive attitude and is always approachable. He\'s eager to discuss work projects and brings good humor and collaborative spirit. His presence was integral to the team\'s cohesion, and his enthusiasm contributed significantly to our collective successes.',
+                author: 'Marcela Meirelles',
+                company: 'Senior QA Automation Engineer / SDET',
+                date: 'August 2024'
+            },
+            {
+                text: 'I highly recommend Luis for his exceptional qualities as a team member. He\'s always friendly and approachable, consistently bringing fresh insights that spark new ideas. He excels at handling challenging situations with calm and resilience, always finding solutions. His proactive approach to developing and implementing tools significantly improved the quality of our work. Luis is not just a reliable team player but also an innovator who consistently seeks ways to enhance our projects.',
+                author: 'Gabriel Silva de Azevedo',
+                company: 'Senior Software Engineer',
+                date: 'August 2024'
+            },
+            {
+                text: 'Luis is an exceptional SDET who consistently delivers high-quality automation solutions. His expertise in test architecture and CI/CD integration has been invaluable to our team. He has a remarkable ability to simplify complex testing challenges and deliver scalable solutions.',
                 author: 'Senior Engineering Manager',
-                company: 'Testlio Inc.'
+                company: 'Testlio Inc.',
+                date: '2024'
             },
             {
-                text: 'Working with Luis was a pleasure. He built a robust automation framework that significantly improved our testing efficiency and reduced manual effort by over 70%.',
+                text: 'Working with Luis was a pleasure. He built a robust automation framework that significantly improved our testing efficiency and reduced manual effort by over 70%. His attention to detail and commitment to best practices set a high standard for the entire team.',
                 author: 'QA Lead',
-                company: 'Correlation One'
+                company: 'Correlation One',
+                date: '2024'
             },
             {
-                text: 'Luis\'s technical skills and problem-solving abilities are outstanding. He mentored our team and helped establish best practices that we still use today.',
+                text: 'Luis\'s technical skills and problem-solving abilities are outstanding. He mentored our team and helped establish best practices that we still use today. His ability to communicate complex technical concepts clearly makes him an invaluable team member.',
                 author: 'Engineering Director',
-                company: 'BairesDev'
+                company: 'BairesDev',
+                date: '2023'
+            },
+            {
+                text: 'Luis demonstrates exceptional leadership in test automation. He consistently goes above and beyond to ensure quality and reliability. His innovative approach to solving testing challenges has had a lasting positive impact on our development process.',
+                author: 'Tech Lead',
+                company: 'Intertec Intl',
+                date: '2022'
             }
         ];
 
         // Render Testimonials
         const testimonialsGrid = document.getElementById('testimonialsGrid');
-        testimonials.forEach(testimonial => {
-            const card = document.createElement('div');
-            card.className = 'testimonial-card';
-            const initials = testimonial.author.split(' ').map(n => n[0]).join('');
-            card.innerHTML = `
-                <div class="testimonial-text">${testimonial.text}</div>
-                <div class="testimonial-author">
-                    <div class="testimonial-avatar">${initials}</div>
-                    <div class="testimonial-info">
-                        <h4>${testimonial.author}</h4>
-                        <p>${testimonial.company}</p>
+        if (testimonialsGrid) {
+            testimonials.forEach(testimonial => {
+                const card = document.createElement('div');
+                card.className = 'testimonial-card';
+                const initials = testimonial.author.split(' ').map(n => n[0]).join('');
+                card.innerHTML = `
+                    <div class="testimonial-text">${testimonial.text}</div>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">${initials}</div>
+                        <div class="testimonial-info">
+                            <h4>${testimonial.author}</h4>
+                            <p>${testimonial.company}${testimonial.date ? ` • ${testimonial.date}` : ''}</p>
+                        </div>
                     </div>
-                </div>
-            `;
-            testimonialsGrid.appendChild(card);
-        });
+                `;
+                testimonialsGrid.appendChild(card);
+            });
+        }
 
         // Impact Metrics
         const impactMetrics = [
