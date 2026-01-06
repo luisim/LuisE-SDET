@@ -741,6 +741,176 @@
             line-height: 1.7;
         }
 
+        .project-links {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .project-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            padding: 10px 20px;
+            background: rgba(96, 165, 250, 0.1);
+            border-radius: 8px;
+            border: 1px solid rgba(96, 165, 250, 0.3);
+        }
+
+        .project-links a:hover {
+            background: rgba(96, 165, 250, 0.2);
+            border-color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        /* Test Reports Showcase */
+        .test-reports-showcase {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .report-card {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .report-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(99, 102, 241, 0.3);
+            border-color: rgba(99, 102, 241, 0.5);
+        }
+
+        .report-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .report-card h3 {
+            color: var(--primary);
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .report-card p {
+            color: var(--text-secondary);
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .report-metrics {
+            display: flex;
+            justify-content: space-around;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+        }
+
+        .metric {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .metric-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .report-link {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        }
+
+        .report-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
+        }
+
+        .report-info {
+            background: rgba(31, 41, 55, 0.4);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .report-info h4 {
+            color: var(--primary);
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .report-info ol {
+            color: var(--text-secondary);
+            line-height: 2;
+            margin-bottom: 20px;
+            padding-left: 25px;
+        }
+
+        .report-info ol li {
+            margin-bottom: 8px;
+        }
+
+        .report-info ol li strong {
+            color: var(--primary);
+        }
+
+        .report-info code {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2px 8px;
+            border-radius: 4px;
+            color: var(--secondary);
+            font-family: 'Courier New', monospace;
+        }
+
+        .report-note {
+            background: rgba(99, 102, 241, 0.1);
+            border-left: 3px solid var(--primary);
+            padding: 15px;
+            border-radius: 8px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .test-reports-showcase {
+                grid-template-columns: 1fr;
+            }
+
+            .report-metrics {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
         .project-tech {
             display: flex;
             flex-wrap: wrap;
@@ -1732,6 +1902,47 @@
             <div class="projects-grid" id="projectsGrid"></div>
         </div>
 
+        <!-- Test Reports Showcase -->
+        <div class="card" id="test-reports">
+            <h2>Test Automation Reports</h2>
+            <div class="test-reports-showcase">
+                <div class="report-card">
+                    <div class="report-icon">📊</div>
+                    <h3>Allure Reports</h3>
+                    <p>Comprehensive test execution reports with detailed metrics, history, and trends</p>
+                    <div class="report-metrics">
+                        <div class="metric">
+                            <span class="metric-value">100%</span>
+                            <span class="metric-label">Pass Rate</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value">CI/CD</span>
+                            <span class="metric-label">Integrated</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value">Multi-Browser</span>
+                            <span class="metric-label">Testing</span>
+                        </div>
+                    </div>
+                    <a href="https://luisim.github.io/LuisE-SDET/allure-reports/index.html" target="_blank" class="report-link">
+                        View Latest Report →
+                    </a>
+                    <a href="https://github.com/luisim/LuisE-SDET/actions" target="_blank" class="report-link" style="margin-top: 10px; display: block; background: rgba(99, 102, 241, 0.2); color: var(--primary);">
+                        View on GitHub Actions →
+                    </a>
+                </div>
+                <div class="report-info">
+                    <h4>📍 Where to Find Reports:</h4>
+                    <ol>
+                        <li><strong>Direct Link:</strong> Click "View Latest Report" above</li>
+                        <li><strong>GitHub Pages:</strong> <code>luisim.github.io/LuisE-SDET/allure-reports/</code></li>
+                        <li><strong>GitHub Actions:</strong> Download from artifacts (30-day retention)</li>
+                    </ol>
+                    <p class="report-note">💡 Reports include: test history, execution trends, detailed test results, screenshots, and performance metrics.</p>
+                </div>
+            </div>
+        </div>
+
         <!-- Code Snippets -->
         <div class="card" id="code">
             <h2>Framework Architecture</h2>
@@ -2391,6 +2602,14 @@
 
         // Projects Data
         const projects = [
+            {
+                title: 'Allure Test Reports',
+                description: 'Beautiful, detailed test execution reports with history, trends, and comprehensive metrics. Showcasing professional test automation reporting.',
+                tech: ['Allure', 'Playwright', 'TypeScript', 'CI/CD'],
+                link: 'https://github.com/luisim/LuisE-SDET/actions',
+                linkText: 'View Latest Report',
+                icon: '📊'
+            },
             {
                 title: 'Hybrid Test Automation Framework',
                 description: 'Built a scalable Java-based framework supporting Web, Mobile, and API testing with Page Object Model, parallel execution, and CI/CD integration.',

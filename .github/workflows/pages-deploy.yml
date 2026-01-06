@@ -4,11 +4,16 @@ on:
   push:
     branches: [ main ]
   workflow_dispatch:
+  workflow_run:
+    workflows: ["E2E Tests"]
+    types:
+      - completed
 
 permissions:
   contents: read
   pages: write
   id-token: write
+  actions: read
 
 concurrency:
   group: "pages"
@@ -18,6 +23,7 @@ jobs:
   deploy:
     name: Deploy to GitHub Pages
     runs-on: ubuntu-latest
+    if: github.event.workflow_run.conclusion == 'success' || github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -25,6 +31,25 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      
+      - name: Download Allure report from latest CI run
+        if: github.event_name == 'workflow_run'
+        uses: dawidd6/action-download-artifact@v3
+        with:
+          workflow: E2E Tests
+          workflow_conclusion: success
+          name: allure-report
+          path: allure-reports
+          if_no_artifact_found: ignore
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true
+      
+      - name: Create empty allure-reports directory if missing
+        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+        run: |
+          mkdir -p allure-reports
+          echo '<!DOCTYPE html><html><head><title>Allure Reports</title></head><body><h1>Allure Reports</h1><p>Reports will be available after the next test run completes.</p><p><a href="https://github.com/${{ github.repository }}/actions">View test runs on GitHub Actions</a></p></body></html>' > allure-reports/index.html
+        continue-on-error: true
       
       - name: Setup Pages
         uses: actions/configure-pages@v4
