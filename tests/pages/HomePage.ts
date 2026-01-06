@@ -53,6 +53,7 @@ export class HomePage extends BasePage {
   /**
    * Navigate to home page
    * Uses baseURL from playwright.config.ts
+   * Now uses 'networkidle' because we fixed the website to allow it
    */
   async navigate(): Promise<void> {
     // Get baseURL from context or use default
@@ -61,6 +62,7 @@ export class HomePage extends BasePage {
     // Navigate to the full URL to ensure correct path
     const targetURL = baseURL.endsWith('/') ? baseURL : baseURL + '/';
     
+    // Use 'networkidle' - should work now that we fixed image loading and animation
     await this.page.goto(targetURL, { 
       waitUntil: 'networkidle',
       timeout: 30000 
@@ -75,20 +77,22 @@ export class HomePage extends BasePage {
       );
     }
     
-    // Verify page loaded by checking for hero section
+    // Wait for hero section to be visible (confirms page loaded)
     await this.page.waitForSelector('[data-testid="hero-section"]', { timeout: 10000 });
     await this.waitForPageReady();
   }
 
   /**
    * Wait for page to be fully loaded
+   * Now waits for networkidle since we fixed the website
    */
   async waitForPageReady(): Promise<void> {
-    await this.helpers.waitForPageLoad();
-    // Wait for hero section to confirm page loaded (more reliable than navbar)
-    await this.helpers.waitForElementVisible('[data-testid="hero-section"]', 30000);
-    await this.waitForElement('[data-testid="navbar"]');
-    await this.helpers.waitForAnimations();
+    // Wait for network to be idle (should work now that we fixed the website)
+    await this.page.waitForLoadState('networkidle');
+    
+    // Wait for key elements to be visible
+    await this.helpers.waitForElementVisible('[data-testid="hero-section"]', 10000);
+    await this.helpers.waitForElementVisible('[data-testid="navbar"]', 5000);
   }
 
   /**

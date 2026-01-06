@@ -2034,6 +2034,10 @@
         const techGrid = new TechGrid();
         // No circuit lines - peaceful, clean background
 
+        // Track animation state to allow proper cleanup
+        let animationId = null;
+        let isAnimating = false;
+        
         function animate() {
             // Slower, more peaceful fade - less aggressive clearing
             ctx.fillStyle = 'rgba(15, 23, 42, 0.05)'; // Much more subtle fade
@@ -2046,9 +2050,42 @@
                 star.draw();
             });
 
-            requestAnimationFrame(animate);
+            animationId = requestAnimationFrame(animate);
         }
-        animate();
+        
+        function startAnimation() {
+            if (!isAnimating) {
+                isAnimating = true;
+                animate();
+            }
+        }
+        
+        function stopAnimation() {
+            if (animationId !== null) {
+                cancelAnimationFrame(animationId);
+                animationId = null;
+                isAnimating = false;
+            }
+        }
+        
+        // Use Page Visibility API to pause animation when tab is hidden
+        // This saves resources and allows networkidle to be reached
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                stopAnimation();
+            } else {
+                startAnimation();
+            }
+        });
+        
+        // Wait for all images to load before starting animation
+        // This ensures networkidle can be reached
+        window.addEventListener('load', function() {
+            // Small delay to ensure all resources are loaded
+            setTimeout(() => {
+                startAnimation();
+            }, 100);
+        });
 
         // Smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -2792,14 +2829,16 @@
                         logoDiv.style.background = 'transparent';
                     };
                     
-                    // Fallback to initials if image fails
+                    // Fallback to initials if image fails (prevent infinite retries)
+                    let hasTriedFallback = false;
                     img.onerror = function() {
-                        // Try fallback URL if available
-                        if (client.fallbackUrl) {
+                        // Try fallback URL if available and not already tried
+                        if (client.fallbackUrl && !hasTriedFallback) {
+                            hasTriedFallback = true;
                             this.src = client.fallbackUrl;
                             return;
                         }
-                        // Show initials if all fails
+                        // Show initials if all fails (stop trying)
                         this.style.display = 'none';
                         const span = logoDiv.querySelector('span');
                         if (span) span.style.display = 'flex';
