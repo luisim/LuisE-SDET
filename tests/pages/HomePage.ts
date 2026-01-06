@@ -52,74 +52,32 @@ export class HomePage extends BasePage {
 
   /**
    * Navigate to home page
-   * Uses baseURL from playwright.config.ts (must match GitHub Pages URL exactly)
-   * Best Practice: Use exact repository name with correct case in config
+   * Uses baseURL from playwright.config.ts
    */
   async navigate(): Promise<void> {
-    // Try explicit index.html first (most reliable for GitHub Pages)
-    // Then fallback to root path
-    const urlOptions = [
-      '/index.html',  // Explicit path (most reliable)
-      '/',            // Root path (uses baseURL from config)
-    ];
+    // Get baseURL from context or use default
+    const baseURL = (this.page.context() as any).baseURL || 'https://luisim.github.io/LuisE-SDET/';
     
-    let lastError: Error | null = null;
-    let lastResponse: any = null;
+    // Navigate to the full URL to ensure correct path
+    const targetURL = baseURL.endsWith('/') ? baseURL : baseURL + '/';
     
-    for (const url of urlOptions) {
-      try {
-        const response = await this.page.goto(url, { 
-          waitUntil: 'networkidle',
-          timeout: 30000 
-        });
-        
-        if (response) {
-          const status = response.status();
-          if (status === 200 || status === 304) {
-            // Verify page actually loaded by checking for key element
-            try {
-              await this.page.waitForSelector('[data-testid="hero-section"]', { timeout: 5000 });
-              await this.waitForPageReady();
-              return; // Success!
-            } catch {
-              // Element not found, try next URL format
-              continue;
-            }
-          }
-          lastResponse = { status, url: response.url() };
-        } else {
-          // Response is null but no error - verify page loaded
-          try {
-            await this.page.waitForSelector('[data-testid="hero-section"]', { timeout: 5000 });
-            await this.waitForPageReady();
-            return;
-          } catch {
-            continue;
-          }
-        }
-      } catch (error) {
-        lastError = error as Error;
-        continue;
-      }
+    await this.page.goto(targetURL, { 
+      waitUntil: 'networkidle',
+      timeout: 30000 
+    });
+    
+    // Verify we're on the correct URL
+    const currentURL = this.page.url();
+    if (!currentURL.includes('LuisE-SDET')) {
+      throw new Error(
+        `Navigation failed: Expected URL containing 'LuisE-SDET', but got: ${currentURL}\n` +
+        `baseURL from config: ${baseURL}`
+      );
     }
     
-    // If all attempts failed, provide helpful error message
-    const currentURL = this.page.url();
-    const errorDetails = lastResponse 
-      ? `HTTP ${lastResponse.status} from ${lastResponse.url}`
-      : `Error: ${lastError?.message || 'Unknown error'}`;
-    
-    throw new Error(
-      `Failed to navigate to homepage.\n` +
-      `\nCurrent URL: ${currentURL}\n` +
-      `${errorDetails}\n` +
-      `\nBest Practice Fix:\n` +
-      `1. Verify baseURL in playwright.config.ts matches your GitHub Pages URL EXACTLY (case-sensitive!)\n` +
-      `2. Repository name must match exactly: LuisE-SDET (check GitHub: Settings → General → Repository name)\n` +
-      `3. Ensure GitHub Pages is enabled: Settings → Pages → Source: main branch\n` +
-      `4. Test URL manually in browser: https://luisim.github.io/LuisE-SDET/\n` +
-      `5. Wait a few minutes after deployment (GitHub Pages can take time to propagate)`
-    );
+    // Verify page loaded by checking for hero section
+    await this.page.waitForSelector('[data-testid="hero-section"]', { timeout: 10000 });
+    await this.waitForPageReady();
   }
 
   /**
