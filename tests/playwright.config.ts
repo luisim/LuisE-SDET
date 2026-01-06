@@ -35,22 +35,12 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    /* IMPORTANT: GitHub Pages URLs are case-sensitive. Use exact capitalization: LuisE-SDET */
-    baseURL: (() => {
-      const envURL = process.env.BASE_URL;
-      if (envURL) {
-        // Normalize user-provided URL
-        let url = envURL.trim();
-        if (!url.endsWith('/')) url += '/';
-        return url;
-      }
-      // Default: exact GitHub Pages URL with correct case
-      return 'https://luisim.github.io/LuisE-SDET/';
-    })(),
-    
-    /* Slow down operations by the specified amount of milliseconds. Useful for debugging. */
-    /* Set via environment variable: SLOW_MO=1000 npx playwright test */
-    slowMo: process.env.SLOW_MO ? parseInt(process.env.SLOW_MO) : undefined,
+    /* 
+     * BEST PRACTICE: Use exact repository name with correct case
+     * GitHub Pages URLs are case-sensitive - must match repository name exactly
+     * Override with BASE_URL environment variable for local testing
+     */
+    baseURL: process.env.BASE_URL || 'https://luisim.github.io/LuisE-SDET/',
     
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',

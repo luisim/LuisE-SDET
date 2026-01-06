@@ -52,20 +52,19 @@ export class HomePage extends BasePage {
 
   /**
    * Navigate to home page
-   * Handles GitHub Pages URL normalization gracefully with fallback options
-   * GitHub Pages URLs are case-sensitive, so we try multiple formats
+   * Uses baseURL from playwright.config.ts (must match GitHub Pages URL exactly)
+   * Best Practice: Use exact repository name with correct case in config
    */
   async navigate(): Promise<void> {
-    // Try multiple URL formats for maximum compatibility
-    // Playwright will use baseURL from config, but we try explicit paths too
+    // Try explicit index.html first (most reliable for GitHub Pages)
+    // Then fallback to root path
     const urlOptions = [
-      '/index.html',  // Explicit index.html (most reliable)
-      '/',            // Root path (should work with baseURL)
+      '/index.html',  // Explicit path (most reliable)
+      '/',            // Root path (uses baseURL from config)
     ];
     
     let lastError: Error | null = null;
     let lastResponse: any = null;
-    let lastUrl: string = '';
     
     for (const url of urlOptions) {
       try {
@@ -74,52 +73,52 @@ export class HomePage extends BasePage {
           timeout: 30000 
         });
         
-        lastUrl = url;
-        
         if (response) {
           const status = response.status();
           if (status === 200 || status === 304) {
-            // Success! Wait for page to be ready
-            await this.waitForPageReady();
-            return;
+            // Verify page actually loaded by checking for key element
+            try {
+              await this.page.waitForSelector('[data-testid="hero-section"]', { timeout: 5000 });
+              await this.waitForPageReady();
+              return; // Success!
+            } catch {
+              // Element not found, try next URL format
+              continue;
+            }
           }
           lastResponse = { status, url: response.url() };
         } else {
-          // Response is null but no error - might still be loading
-          // Check if page actually loaded by waiting for an element
+          // Response is null but no error - verify page loaded
           try {
-            await this.page.waitForSelector('[data-testid="hero-section"]', { timeout: 10000 });
+            await this.page.waitForSelector('[data-testid="hero-section"]', { timeout: 5000 });
             await this.waitForPageReady();
             return;
           } catch {
-            // Element not found, try next URL
             continue;
           }
         }
       } catch (error) {
         lastError = error as Error;
-        // Try next URL format
         continue;
       }
     }
     
-    // If all attempts failed, get current URL for debugging
+    // If all attempts failed, provide helpful error message
     const currentURL = this.page.url();
     const errorDetails = lastResponse 
-      ? `Last response: ${lastResponse.status} from ${lastResponse.url}`
-      : `Last error: ${lastError?.message || 'Unknown error'}`;
+      ? `HTTP ${lastResponse.status} from ${lastResponse.url}`
+      : `Error: ${lastError?.message || 'Unknown error'}`;
     
     throw new Error(
-      `Failed to navigate to homepage after trying ${urlOptions.length} URL formats.\n` +
-      `Tried relative paths: ${urlOptions.join(', ')}\n` +
-      `Current page URL: ${currentURL}\n` +
+      `Failed to navigate to homepage.\n` +
+      `\nCurrent URL: ${currentURL}\n` +
       `${errorDetails}\n` +
-      `\nTroubleshooting:\n` +
-      `1. Verify baseURL in playwright.config.ts matches your GitHub Pages URL exactly (case-sensitive!)\n` +
-      `2. Repository name must be exactly: LuisE-SDET (check GitHub repository settings)\n` +
-      `3. Ensure GitHub Pages is enabled and deployed (Settings → Pages)\n` +
-      `4. Wait a few minutes after deployment (GitHub Pages can take time to propagate)\n` +
-      `5. Test URL manually in browser: https://luisim.github.io/LuisE-SDET/`
+      `\nBest Practice Fix:\n` +
+      `1. Verify baseURL in playwright.config.ts matches your GitHub Pages URL EXACTLY (case-sensitive!)\n` +
+      `2. Repository name must match exactly: LuisE-SDET (check GitHub: Settings → General → Repository name)\n` +
+      `3. Ensure GitHub Pages is enabled: Settings → Pages → Source: main branch\n` +
+      `4. Test URL manually in browser: https://luisim.github.io/LuisE-SDET/\n` +
+      `5. Wait a few minutes after deployment (GitHub Pages can take time to propagate)`
     );
   }
 
