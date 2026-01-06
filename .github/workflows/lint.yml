@@ -38,6 +38,7 @@ jobs:
       - name: Install dependencies
         run: |
           cd tests
+          ls -la package.json || echo "package.json not found"
           if [ -f package-lock.json ]; then
             npm ci
           else
