@@ -5,6 +5,7 @@ import { HomePage } from '../pages/HomePage';
  * Simplified Homepage Test Suite
  * Minimal smoke tests to get CI/CD working
  * Uses Page Object Model (POM) pattern
+ * Allure reporting enabled
  */
 test.describe('Homepage Smoke Tests', () => {
   let homePage: HomePage;

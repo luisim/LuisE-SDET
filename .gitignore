@@ -8,6 +8,8 @@ package-lock.json
 test-results/
 playwright-report/
 tests/test-results/
+allure-results/
+allure-report/
 tests/playwright-report/
 *.webm
 *.png

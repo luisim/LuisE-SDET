@@ -7,6 +7,7 @@ A comprehensive E2E test automation framework built with **TypeScript** and **Pl
 - ✅ **Page Object Model (POM)** - Clean, maintainable page objects
 - ✅ **TypeScript** - Type-safe test code
 - ✅ **Playwright** - Fast, reliable browser automation
+- ✅ **Allure Reports** - Beautiful, detailed test reports with history
 - ✅ **Proper Element Identification** - Using `data-testid` attributes
 - ✅ **Comprehensive Test Coverage** - Smoke and regression tests
 - ✅ **CI/CD Ready** - Configured for continuous integration
@@ -39,6 +40,7 @@ tests/
 
 - Node.js 18+ 
 - npm or yarn
+- Java 8+ (required for Allure reports)
 
 ### Installation
 
@@ -99,10 +101,37 @@ npm run test:debug
 
 ## 📊 Test Reports
 
+### Playwright HTML Report
 After running tests, view the HTML report:
 ```bash
 npm run test:report
 ```
+
+### Allure Reports
+Allure provides beautiful, detailed test reports with history, trends, and attachments.
+
+**Generate and view Allure report:**
+```bash
+# Run tests and generate Allure report
+npm run test:allure
+
+# Or generate from existing results
+npm run allure:generate
+
+# Open report in browser
+npm run allure:open
+
+# Serve report (auto-opens browser)
+npm run allure:serve
+```
+
+**Allure Report Features:**
+- 📊 Test execution history and trends
+- 📸 Screenshots and videos on failure
+- 🔍 Detailed test steps and timing
+- 📈 Test metrics and statistics
+- 🏷️ Test categorization and tags
+- 🔗 Integration with CI/CD
 
 ## 🏗️ Architecture
 
