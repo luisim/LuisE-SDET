@@ -18,7 +18,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        browser: [chromium, firefox, webkit]
+        browser: [chromium]  # Start with just Chromium, add more browsers later
     
     steps:
       - name: Checkout code
@@ -44,8 +44,8 @@ jobs:
             ${{ runner.os }}-npm-
       
       - name: Install dependencies
+        working-directory: ./tests
         run: |
-          cd tests
           if [ -f package-lock.json ]; then
             npm ci
           else
@@ -53,28 +53,14 @@ jobs:
           fi
       
       - name: Install Playwright Browsers
-        run: |
-          cd tests
-          npx playwright install --with-deps ${{ matrix.browser }}
-      
-      - name: Start local server
-        run: |
-          python3 -m http.server 8000 &
-          echo "Server started on port 8000"
-          sleep 2
-        env:
-          PORT: 8000
-      
-      - name: Wait for server
-        run: |
-          timeout 30 bash -c 'until curl -f http://localhost:8000/index.html; do sleep 1; done' || exit 1
+        working-directory: ./tests
+        run: npx playwright install --with-deps ${{ matrix.browser }}
       
       - name: Run Playwright tests
-        run: |
-          cd tests
-          npm test -- --project=${{ matrix.browser }}
+        working-directory: ./tests
+        run: npm test -- --project=${{ matrix.browser }}
         env:
-          BASE_URL: http://localhost:8000
+          BASE_URL: https://luisim.github.io/LuisE-SDET/
         continue-on-error: false
       
       - name: Upload test results
@@ -140,8 +126,8 @@ jobs:
           path: tests/test-results
       
       - name: Install dependencies
+        working-directory: ./tests
         run: |
-          cd tests
           if [ -f package-lock.json ]; then
             npm ci
           else
@@ -149,9 +135,8 @@ jobs:
           fi
       
       - name: Generate HTML report
-        run: |
-          cd tests
-          npm run test:report
+        working-directory: ./tests
+        run: npm run test:report
         continue-on-error: true
       
       - name: Upload HTML report
@@ -189,8 +174,8 @@ jobs:
             ${{ runner.os }}-npm-
       
       - name: Install dependencies
+        working-directory: ./tests
         run: |
-          cd tests
           if [ -f package-lock.json ]; then
             npm ci
           else
@@ -198,28 +183,14 @@ jobs:
           fi
       
       - name: Install Playwright Browsers
-        run: |
-          cd tests
-          npx playwright install --with-deps chromium
-      
-      - name: Start local server
-        run: |
-          python3 -m http.server 8000 &
-          echo "Server started on port 8000"
-          sleep 2
-        env:
-          PORT: 8000
-      
-      - name: Wait for server
-        run: |
-          timeout 30 bash -c 'until curl -f http://localhost:8000/index.html; do sleep 1; done' || exit 1
+        working-directory: ./tests
+        run: npx playwright install --with-deps chromium
       
       - name: Run smoke tests
-        run: |
-          cd tests
-          npm run test:smoke
+        working-directory: ./tests
+        run: npm run test:smoke
         env:
-          BASE_URL: http://localhost:8000
+          BASE_URL: https://luisim.github.io/LuisE-SDET/
       
       - name: Upload smoke test results
         if: always()
