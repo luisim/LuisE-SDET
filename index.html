@@ -3546,34 +3546,6 @@
             });
         }
 
-        // Enhanced card interactions with mouse tracking (reduced for experience and code sections)
-        document.querySelectorAll('.card').forEach(card => {
-            const isExperienceOrCode = card.id === 'experience' || card.id === 'code';
-            
-            card.addEventListener('mousemove', function(e) {
-                if (isExperienceOrCode) {
-                    // Minimal effect for experience and code sections
-                    card.style.transform = 'translateY(-3px) scale(1.005)';
-                    return;
-                }
-                
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                
-                const rotateX = (y - centerY) / 20;
-                const rotateY = (centerX - x) / 20;
-                
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px) scale(1.02)`;
-            });
-            
-            card.addEventListener('mouseleave', function() {
-                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0) scale(1)';
-            });
-        });
 
         // Progress indicators for scroll position
         const progressBar = document.createElement('div');
