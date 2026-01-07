@@ -1726,6 +1726,21 @@
             <div class="pipeline-container" id="pipelineContainer"></div>
         </div>
 
+        <!-- Interactive Test Execution Flow -->
+        <div class="card" id="test-flow">
+            <h2>Interactive Test Execution Flow</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 25px; text-align: center;">
+                Click or hover over each stage to see detailed test execution steps and parallel test runs
+            </p>
+            <div class="test-flow-container" id="testFlowContainer"></div>
+            <div class="test-execution-controls">
+                <button class="flow-btn" id="startExecution">▶ Start Execution</button>
+                <button class="flow-btn" id="pauseExecution">⏸ Pause</button>
+                <button class="flow-btn" id="resetExecution">↻ Reset</button>
+            </div>
+            <div class="execution-stats" id="executionStats"></div>
+        </div>
+
         <!-- Skills -->
         <div class="card" id="skills" data-testid="skills-section">
             <h2 id="skills-title" data-testid="skills-title">Technical Skills</h2>
@@ -2768,6 +2783,332 @@
             
             pipelineContainer.appendChild(pipelineFlow);
         }
+
+        // Interactive Test Execution Flow
+        const testFlowData = [
+            {
+                stage: '1',
+                icon: '⚙️',
+                title: 'Test Setup & Initialization',
+                description: 'Initialize test environment, load configurations, and prepare test data',
+                details: [
+                    'Initialize WebDriver/Playwright browser instances',
+                    'Load test configuration from environment',
+                    'Set up test data and fixtures',
+                    'Configure timeouts and retry policies',
+                    'Initialize reporting framework'
+                ],
+                stats: { duration: '2s', status: 'pending' }
+            },
+            {
+                stage: '2',
+                icon: '🔐',
+                title: 'Authentication & Authorization',
+                description: 'Handle user authentication and session management',
+                details: [
+                    'Navigate to login page',
+                    'Enter credentials securely',
+                    'Validate authentication tokens',
+                    'Establish user session',
+                    'Handle multi-factor authentication'
+                ],
+                stats: { duration: '3s', status: 'pending' }
+            },
+            {
+                stage: '3',
+                icon: '🧪',
+                title: 'Test Execution',
+                description: 'Execute test scenarios with parallel test runs',
+                details: [
+                    'Execute test scenarios in parallel',
+                    'Validate UI elements and interactions',
+                    'Perform API calls and verify responses',
+                    'Check data integrity and state',
+                    'Capture screenshots and logs'
+                ],
+                stats: { duration: '8s', status: 'pending' }
+            },
+            {
+                stage: '4',
+                icon: '✅',
+                title: 'Assertions & Validation',
+                description: 'Verify expected results and validate test outcomes',
+                details: [
+                    'Compare actual vs expected results',
+                    'Validate response status codes',
+                    'Check data consistency',
+                    'Verify UI state changes',
+                    'Perform regression validations'
+                ],
+                stats: { duration: '2s', status: 'pending' }
+            },
+            {
+                stage: '5',
+                icon: '📊',
+                title: 'Reporting & Teardown',
+                description: 'Generate test reports and clean up test environment',
+                details: [
+                    'Generate detailed test reports',
+                    'Capture failure screenshots',
+                    'Collect performance metrics',
+                    'Clean up test data',
+                    'Close browser instances'
+                ],
+                stats: { duration: '1s', status: 'pending' }
+            }
+        ];
+
+        const parallelBrowsers = [
+            { name: 'Chromium', icon: '🌐', progress: 0 },
+            { name: 'Firefox', icon: '🦊', progress: 0 },
+            { name: 'WebKit', icon: '🍎', progress: 0 }
+        ];
+
+        let isExecuting = false;
+        let currentStage = -1;
+        let executionInterval = null;
+
+        const testFlowContainer = document.getElementById('testFlowContainer');
+        if (testFlowContainer) {
+            // Create test flow stages
+            const flowPath = document.createElement('div');
+            flowPath.className = 'test-flow-path';
+            
+            testFlowData.forEach((stage, index) => {
+                const stageDiv = document.createElement('div');
+                stageDiv.className = 'test-stage';
+                stageDiv.dataset.stage = index;
+                stageDiv.innerHTML = `
+                    <div class="stage-indicator">${stage.stage}</div>
+                    <div class="stage-content">
+                        <div class="stage-title">${stage.icon} ${stage.title}</div>
+                        <div class="stage-description">${stage.description}</div>
+                        <div class="stage-stats">
+                            <span class="stage-stat">⏱ ${stage.stats.duration}</span>
+                            <span class="stage-stat">📊 Status: <span class="stage-status">${stage.stats.status}</span></span>
+                        </div>
+                        <div class="stage-details">
+                            <ul>
+                                ${stage.details.map(detail => `<li>${detail}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                `;
+                flowPath.appendChild(stageDiv);
+            });
+            
+            testFlowContainer.appendChild(flowPath);
+
+            // Create parallel execution view
+            const parallelView = document.createElement('div');
+            parallelView.className = 'parallel-execution';
+            parallelView.id = 'parallelExecution';
+            
+            parallelBrowsers.forEach(browser => {
+                const browserDiv = document.createElement('div');
+                browserDiv.className = 'parallel-test';
+                browserDiv.dataset.browser = browser.name;
+                browserDiv.innerHTML = `
+                    <div class="parallel-test-header">
+                        <span class="browser-icon">${browser.icon}</span>
+                        <span class="browser-name">${browser.name}</span>
+                    </div>
+                    <div class="test-progress">
+                        <div class="test-progress-bar" style="width: 0%"></div>
+                    </div>
+                    <div class="stage-stat" style="margin-top: 10px; text-align: center;">
+                        <span class="browser-status">Waiting...</span>
+                    </div>
+                `;
+                parallelView.appendChild(browserDiv);
+            });
+            
+            testFlowContainer.appendChild(parallelView);
+        }
+
+        // Execution controls
+        const startBtn = document.getElementById('startExecution');
+        const pauseBtn = document.getElementById('pauseExecution');
+        const resetBtn = document.getElementById('resetExecution');
+        const statsContainer = document.getElementById('executionStats');
+
+        if (startBtn) {
+            startBtn.addEventListener('click', () => {
+                if (!isExecuting) {
+                    startExecution();
+                }
+            });
+        }
+
+        if (pauseBtn) {
+            pauseBtn.addEventListener('click', () => {
+                if (isExecuting) {
+                    pauseExecution();
+                }
+            });
+        }
+
+        if (resetBtn) {
+            resetBtn.addEventListener('click', () => {
+                resetExecution();
+            });
+        }
+
+        function startExecution() {
+            isExecuting = true;
+            currentStage = -1;
+            
+            // Reset all stages
+            document.querySelectorAll('.test-stage').forEach(stage => {
+                stage.classList.remove('active', 'completed', 'failed');
+            });
+            
+            // Reset parallel execution
+            parallelBrowsers.forEach((browser, index) => {
+                const browserDiv = document.querySelector(`[data-browser="${browser.name}"]`);
+                if (browserDiv) {
+                    browserDiv.querySelector('.test-progress-bar').style.width = '0%';
+                    browserDiv.querySelector('.browser-status').textContent = 'Running...';
+                }
+                browser.progress = 0;
+            });
+
+            // Execute stages sequentially
+            executeNextStage();
+        }
+
+        function executeNextStage() {
+            if (!isExecuting) return;
+            
+            currentStage++;
+            
+            if (currentStage >= testFlowData.length) {
+                completeExecution();
+                return;
+            }
+
+            // Mark current stage as active
+            const stageDiv = document.querySelector(`[data-stage="${currentStage}"]`);
+            if (stageDiv) {
+                stageDiv.classList.add('active');
+                stageDiv.querySelector('.stage-status').textContent = 'Running...';
+            }
+
+            // Update parallel browser progress
+            updateParallelProgress();
+
+            // Move to next stage after delay
+            const delay = parseInt(testFlowData[currentStage].stats.duration) * 1000;
+            setTimeout(() => {
+                if (stageDiv) {
+                    stageDiv.classList.remove('active');
+                    stageDiv.classList.add('completed');
+                    stageDiv.querySelector('.stage-status').textContent = 'Completed ✓';
+                }
+                executeNextStage();
+            }, delay);
+        }
+
+        function updateParallelProgress() {
+            const totalStages = testFlowData.length;
+            const progressPerStage = 100 / totalStages;
+            
+            parallelBrowsers.forEach(browser => {
+                browser.progress = Math.min(100, ((currentStage + 1) / totalStages) * 100);
+                
+                const browserDiv = document.querySelector(`[data-browser="${browser.name}"]`);
+                if (browserDiv) {
+                    const progressBar = browserDiv.querySelector('.test-progress-bar');
+                    if (progressBar) {
+                        progressBar.style.width = browser.progress + '%';
+                    }
+                    
+                    if (currentStage >= totalStages - 1) {
+                        browserDiv.querySelector('.browser-status').textContent = 'Completed ✓';
+                    }
+                }
+            });
+
+            updateStats();
+        }
+
+        function pauseExecution() {
+            isExecuting = false;
+            if (executionInterval) {
+                clearInterval(executionInterval);
+                executionInterval = null;
+            }
+        }
+
+        function resetExecution() {
+            pauseExecution();
+            currentStage = -1;
+            
+            document.querySelectorAll('.test-stage').forEach(stage => {
+                stage.classList.remove('active', 'completed', 'failed');
+                stage.querySelector('.stage-status').textContent = 'pending';
+            });
+
+            parallelBrowsers.forEach(browser => {
+                browser.progress = 0;
+                const browserDiv = document.querySelector(`[data-browser="${browser.name}"]`);
+                if (browserDiv) {
+                    browserDiv.querySelector('.test-progress-bar').style.width = '0%';
+                    browserDiv.querySelector('.browser-status').textContent = 'Waiting...';
+                }
+            });
+
+            updateStats();
+        }
+
+        function completeExecution() {
+            isExecuting = false;
+            
+            // Mark all as completed
+            document.querySelectorAll('.test-stage').forEach(stage => {
+                stage.classList.add('completed');
+            });
+
+            parallelBrowsers.forEach(browser => {
+                const browserDiv = document.querySelector(`[data-browser="${browser.name}"]`);
+                if (browserDiv) {
+                    browserDiv.querySelector('.browser-status').textContent = 'Completed ✓';
+                }
+            });
+
+            updateStats();
+        }
+
+        function updateStats() {
+            if (!statsContainer) return;
+            
+            const totalTests = 45;
+            const passedTests = Math.floor(totalTests * (currentStage + 1) / testFlowData.length);
+            const failedTests = Math.floor(totalTests * 0.05);
+            const duration = ((currentStage + 1) * 3.2).toFixed(1);
+            
+            statsContainer.innerHTML = `
+                <div class="stat-item">
+                    <div class="stat-value">${totalTests}</div>
+                    <div class="stat-label">Total Tests</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" style="color: #10b981;">${passedTests}</div>
+                    <div class="stat-label">Passed</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" style="color: #ef4444;">${failedTests}</div>
+                    <div class="stat-label">Failed</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">${duration}s</div>
+                    <div class="stat-label">Duration</div>
+                </div>
+            `;
+        }
+
+        // Initialize stats
+        updateStats();
 
         // Add achievement badges to certifications
         const certsGridItems = document.querySelectorAll('#certsGrid .cert-item');
