@@ -1282,6 +1282,295 @@
             color: var(--primary);
         }
 
+        /* Interactive Test Execution Flow - Simplified */
+        .test-flow-container {
+            margin-top: 30px;
+            padding: 30px;
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 20px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            position: relative;
+            min-height: 400px;
+        }
+
+        .test-flow-path {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            position: relative;
+        }
+
+        .test-flow-path::before {
+            content: '';
+            position: absolute;
+            left: 50px;
+            top: 60px;
+            bottom: 60px;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            opacity: 0.3;
+            z-index: 0;
+        }
+
+        .test-stage {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            position: relative;
+            z-index: 1;
+            padding: 25px;
+            background: rgba(31, 41, 55, 0.6);
+            border-radius: 15px;
+            border: 2px solid rgba(99, 102, 241, 0.2);
+            transition: border-color 0.2s;
+            cursor: pointer;
+        }
+
+        .test-stage:hover {
+            border-color: var(--primary);
+        }
+
+        .test-stage.active {
+            border-color: var(--primary);
+            background: rgba(96, 165, 250, 0.1);
+        }
+
+        .test-stage.completed {
+            border-color: #10b981;
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .test-stage.failed {
+            border-color: #ef4444;
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .stage-indicator {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(99, 102, 241, 0.2);
+            border: 3px solid var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+
+        .test-stage.active .stage-indicator {
+            background: var(--primary);
+            color: var(--bg-dark);
+        }
+
+        .test-stage.completed .stage-indicator {
+            background: #10b981;
+            border-color: #10b981;
+        }
+
+        .test-stage.failed .stage-indicator {
+            background: #ef4444;
+            border-color: #ef4444;
+        }
+
+        .stage-content {
+            flex: 1;
+        }
+
+        .stage-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .stage-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .stage-details {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            border-left: 3px solid var(--primary);
+        }
+
+        .test-stage.active .stage-details,
+        .test-stage:hover .stage-details {
+            display: block;
+        }
+
+        .stage-details ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .stage-details li {
+            padding: 8px 0;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .stage-details li::before {
+            content: '▸';
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .stage-stats {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .stage-stat {
+            padding: 8px 15px;
+            background: rgba(96, 165, 250, 0.1);
+            border-radius: 8px;
+            font-size: 14px;
+            color: var(--primary);
+            border: 1px solid rgba(96, 165, 250, 0.3);
+        }
+
+        /* Parallel Execution View */
+        .parallel-execution {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .parallel-test {
+            padding: 20px;
+            background: rgba(31, 41, 55, 0.6);
+            border-radius: 15px;
+            border: 2px solid rgba(99, 102, 241, 0.2);
+            transition: border-color 0.2s;
+        }
+
+        .parallel-test:hover {
+            border-color: var(--primary);
+        }
+
+        .parallel-test-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .browser-icon {
+            font-size: 24px;
+        }
+
+        .browser-name {
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .test-progress {
+            height: 6px;
+            background: rgba(99, 102, 241, 0.2);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .test-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 3px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        .test-execution-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .flow-btn {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            font-size: 14px;
+        }
+
+        .flow-btn:hover {
+            opacity: 0.9;
+        }
+
+        .flow-btn:active {
+            opacity: 0.8;
+        }
+
+        .execution-stats {
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(31, 41, 55, 0.6);
+            border-radius: 15px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 768px) {
+            .test-stage {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .test-flow-path::before {
+                left: 25px;
+            }
+
+            .parallel-execution {
+                grid-template-columns: 1fr;
+            }
+
+            .test-execution-controls {
+                flex-direction: column;
+            }
+
+            .flow-btn {
+                width: 100%;
+            }
+        }
+
         /* Achievement Badges */
         .badges-container {
             display: flex;
