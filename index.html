@@ -3,14 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Luis Escobar | Senior SDET</title>
+    <meta name="description" content="Luis Escobar — Senior SDET & Full Stack Engineer with 10+ years of experience in test automation, AI/ML integration, and quality engineering.">
+    <meta name="theme-color" content="#0f172a">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <title>Luis Escobar | Senior SDET & Full Stack Engineer</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         :root {
@@ -22,6 +30,16 @@
             --text-primary: #e5e7eb;
             --text-secondary: #d1d5db;
             --text-muted: #9ca3af;
+            --glow-size: 600px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
         }
 
         body {
@@ -153,11 +171,19 @@
             font-size: clamp(48px, 8vw, 96px);
             font-weight: 900;
             margin-bottom: 20px;
-            background: linear-gradient(to right, #ffffff, var(--primary), var(--secondary));
+            background: linear-gradient(270deg, #ffffff, var(--primary), var(--secondary), var(--accent), var(--primary), #ffffff);
+            background-size: 400% 100%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             letter-spacing: -2px;
+            animation: heroGradient 8s ease infinite;
+        }
+
+        @keyframes heroGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .hero h2 {
@@ -1007,6 +1033,294 @@
             box-shadow: 0 15px 40px rgba(244, 114, 182, 0.4);
         }
 
+        /* Mouse Glow Effect */
+        .mouse-glow {
+            position: fixed;
+            width: var(--glow-size);
+            height: var(--glow-size);
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(96, 165, 250, 0.07) 0%, rgba(167, 139, 250, 0.03) 40%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.3s;
+            will-change: left, top;
+        }
+
+        /* Staggered grid item animations */
+        .stat-card, .impact-card, .skill-category, .project-card, .cert-item, 
+        .client-card, .badge, .testimonial-card, .pyramid-level, .pipeline-stage {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .card.visible .stat-card,
+        .card.visible .impact-card,
+        .card.visible .skill-category,
+        .card.visible .project-card,
+        .card.visible .cert-item,
+        .card.visible .client-card,
+        .card.visible .badge,
+        .card.visible .testimonial-card,
+        .card.visible .pyramid-level,
+        .card.visible .pipeline-stage {
+            animation: staggerIn 0.5s ease forwards;
+        }
+
+        .card.visible .stat-card:nth-child(1), .card.visible .impact-card:nth-child(1), .card.visible .skill-category:nth-child(1), .card.visible .project-card:nth-child(1), .card.visible .cert-item:nth-child(1), .card.visible .client-card:nth-child(1), .card.visible .badge:nth-child(1), .card.visible .testimonial-card:nth-child(1), .card.visible .pyramid-level:nth-child(1), .card.visible .pipeline-stage:nth-child(1) { animation-delay: 0.05s; }
+        .card.visible .stat-card:nth-child(2), .card.visible .impact-card:nth-child(2), .card.visible .skill-category:nth-child(2), .card.visible .project-card:nth-child(2), .card.visible .cert-item:nth-child(2), .card.visible .client-card:nth-child(2), .card.visible .badge:nth-child(2), .card.visible .testimonial-card:nth-child(2), .card.visible .pyramid-level:nth-child(2), .card.visible .pipeline-stage:nth-child(2) { animation-delay: 0.1s; }
+        .card.visible .stat-card:nth-child(3), .card.visible .impact-card:nth-child(3), .card.visible .skill-category:nth-child(3), .card.visible .project-card:nth-child(3), .card.visible .cert-item:nth-child(3), .card.visible .client-card:nth-child(3), .card.visible .badge:nth-child(3), .card.visible .testimonial-card:nth-child(3), .card.visible .pyramid-level:nth-child(3), .card.visible .pipeline-stage:nth-child(3) { animation-delay: 0.15s; }
+        .card.visible .stat-card:nth-child(4), .card.visible .impact-card:nth-child(4), .card.visible .skill-category:nth-child(4), .card.visible .project-card:nth-child(4), .card.visible .cert-item:nth-child(4), .card.visible .client-card:nth-child(4), .card.visible .badge:nth-child(4), .card.visible .testimonial-card:nth-child(4) { animation-delay: 0.2s; }
+        .card.visible .stat-card:nth-child(5), .card.visible .impact-card:nth-child(5), .card.visible .skill-category:nth-child(5), .card.visible .project-card:nth-child(5), .card.visible .cert-item:nth-child(5), .card.visible .client-card:nth-child(5), .card.visible .badge:nth-child(5), .card.visible .testimonial-card:nth-child(5) { animation-delay: 0.25s; }
+        .card.visible .stat-card:nth-child(6), .card.visible .impact-card:nth-child(6), .card.visible .skill-category:nth-child(6), .card.visible .project-card:nth-child(6), .card.visible .cert-item:nth-child(6), .card.visible .client-card:nth-child(6), .card.visible .badge:nth-child(6), .card.visible .testimonial-card:nth-child(6) { animation-delay: 0.3s; }
+        .card.visible .cert-item:nth-child(7), .card.visible .client-card:nth-child(7), .card.visible .badge:nth-child(7), .card.visible .impact-card:nth-child(7) { animation-delay: 0.35s; }
+        .card.visible .cert-item:nth-child(8), .card.visible .client-card:nth-child(8), .card.visible .badge:nth-child(8), .card.visible .impact-card:nth-child(8) { animation-delay: 0.4s; }
+        .card.visible .badge:nth-child(9) { animation-delay: 0.45s; }
+        .card.visible .badge:nth-child(10) { animation-delay: 0.5s; }
+
+        @keyframes staggerIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Nav active link */
+        nav a.active {
+            color: var(--primary);
+        }
+
+        nav a.active::after {
+            width: 100%;
+        }
+
+        /* Mobile menu overlay */
+        .mobile-nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-nav-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-nav-overlay a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: 600;
+            padding: 12px 40px;
+            border-radius: 12px;
+            transition: all 0.3s;
+            transform: translateY(20px);
+            opacity: 0;
+        }
+
+        .mobile-nav-overlay.open a {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .mobile-nav-overlay.open a:nth-child(1) { transition-delay: 0.05s; }
+        .mobile-nav-overlay.open a:nth-child(2) { transition-delay: 0.1s; }
+        .mobile-nav-overlay.open a:nth-child(3) { transition-delay: 0.15s; }
+        .mobile-nav-overlay.open a:nth-child(4) { transition-delay: 0.2s; }
+        .mobile-nav-overlay.open a:nth-child(5) { transition-delay: 0.25s; }
+        .mobile-nav-overlay.open a:nth-child(6) { transition-delay: 0.3s; }
+        .mobile-nav-overlay.open a:nth-child(7) { transition-delay: 0.35s; }
+
+        .mobile-nav-overlay a:hover {
+            color: var(--primary);
+            background: rgba(96, 165, 250, 0.1);
+        }
+
+        .mobile-close-btn {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 32px;
+            cursor: pointer;
+            padding: 8px;
+            transition: transform 0.3s;
+        }
+
+        .mobile-close-btn:hover {
+            transform: rotate(90deg);
+        }
+
+        /* Code snippet improvements */
+        .code-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 20px;
+            background: rgba(17, 24, 39, 0.8);
+            border-radius: 15px 15px 0 0;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-bottom: none;
+        }
+
+        .code-header .code-lang {
+            color: var(--text-muted);
+            font-size: 13px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .code-header .code-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .code-header .code-dots span {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .code-header .code-dots span:nth-child(1) { background: #ef4444; }
+        .code-header .code-dots span:nth-child(2) { background: #eab308; }
+        .code-header .code-dots span:nth-child(3) { background: #22c55e; }
+
+        .copy-btn {
+            background: rgba(96, 165, 250, 0.1);
+            border: 1px solid rgba(96, 165, 250, 0.3);
+            color: var(--text-muted);
+            padding: 6px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .copy-btn:hover {
+            background: rgba(96, 165, 250, 0.2);
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .copy-btn.copied {
+            background: rgba(34, 197, 94, 0.2);
+            border-color: #22c55e;
+            color: #22c55e;
+        }
+
+        .code-snippet.enhanced {
+            border-radius: 0 0 15px 15px;
+            margin-top: 0;
+        }
+
+        .code-snippet pre {
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            tab-size: 4;
+        }
+
+        .code-line-numbers {
+            position: absolute;
+            left: 0;
+            top: 25px;
+            bottom: 25px;
+            width: 45px;
+            background: rgba(15, 23, 42, 0.5);
+            border-right: 1px solid rgba(99, 102, 241, 0.15);
+            display: flex;
+            flex-direction: column;
+            padding-top: 0;
+            user-select: none;
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            color: rgba(148, 163, 184, 0.4);
+            text-align: right;
+            padding-right: 10px;
+        }
+
+        .has-line-numbers pre {
+            padding-left: 55px;
+        }
+
+        /* Footer */
+        .site-footer {
+            margin-top: 60px;
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            border-top: 1px solid rgba(99, 102, 241, 0.15);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .footer-tagline {
+            color: var(--text-muted);
+            font-size: 13px;
+            opacity: 0.6;
+        }
+
+        /* Page load animation */
+        body.loading > .container,
+        body.loading > .site-footer {
+            opacity: 0;
+        }
+
+        body:not(.loading) > .container,
+        body:not(.loading) > .site-footer {
+            animation: pageIn 0.8s ease-out forwards;
+        }
+
+        @keyframes pageIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         /* Animations */
         @keyframes fadeInUp {
             from {
@@ -1212,7 +1526,7 @@
             display: flex;
             align-items: center;
             gap: 20px;
-            min-width: 800px;
+            min-width: 950px;
             position: relative;
         }
 
@@ -1392,17 +1706,22 @@
         }
 
         .stage-details {
-            display: none;
             margin-top: 15px;
-            padding: 15px;
+            padding: 0 15px;
             background: rgba(0, 0, 0, 0.3);
             border-radius: 10px;
             border-left: 3px solid var(--primary);
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.35s ease, opacity 0.25s ease, padding 0.35s ease;
         }
 
         .test-stage.active .stage-details,
-        .test-stage:hover .stage-details {
-            display: block;
+        .test-stage.details-open .stage-details {
+            max-height: 300px;
+            opacity: 1;
+            padding: 15px;
         }
 
         .stage-details ul {
@@ -1883,30 +2202,996 @@
             }
         }
 
-        /* Print Styles */
+        /* ── Print / PDF Styles ── */
         @media print {
-            nav, .scroll-top, .download-btn, canvas#spaceCanvas {
+            /* Override CSS variables so every var() reference resolves to print-safe colors */
+            :root {
+                --primary: #2563eb !important;
+                --secondary: #6d28d9 !important;
+                --accent: #db2777 !important;
+                --bg-dark: #ffffff !important;
+                --bg-card: #ffffff !important;
+                --text-primary: #1a1a1a !important;
+                --text-secondary: #333333 !important;
+                --text-muted: #666666 !important;
+            }
+
+            /* Hide non-print elements */
+            nav, .scroll-top, .download-btn, canvas#spaceCanvas, .mouse-glow,
+            .mobile-nav-overlay, .site-footer, .code-header, .chat-widget,
+            .chat-toggle, #radar, #pipeline, #test-flow, #badges, #clients,
+            .skills-search, .skill-category-filter, .hero, .mobile-menu-btn,
+            .test-execution-controls, .execution-stats, .expand-btn,
+            .copy-btn, .code-line-numbers {
                 display: none !important;
+            }
+
+            @page {
+                margin: 0.6in 0.5in;
+                size: letter;
+            }
+
+            html {
+                font-size: 11px;
             }
 
             body {
                 background: white !important;
-                color: black !important;
+                background-image: none !important;
+                color: #1a1a1a !important;
+                line-height: 1.5;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
             }
 
-            .card {
-                page-break-inside: avoid;
-                background: white !important;
-                border: 1px solid #ddd !important;
+            /* Force containers visible (kill loading / pageIn animation state) */
+            body, body.loading, .container, body > .container, body > .site-footer {
+                opacity: 1 !important;
+                transform: none !important;
+                animation: none !important;
+            }
+
+            .container {
+                max-width: 100% !important;
+                padding: 0 !important;
+                margin: 0 auto !important;
             }
 
             * {
                 box-shadow: none !important;
+                text-shadow: none !important;
+                transition: none !important;
             }
+
+            /* Kill animations but force final visible state */
+            *, *::before, *::after {
+                animation: none !important;
+            }
+
+            /* Fix ALL gradient text — make it solid for print */
+            .card h2, .header-card h1, .header-card h3,
+            .stat-card .value, .impact-value,
+            nav h1, .hero h1, .hero h2,
+            .skill-category h3, .section-subtitle,
+            h1, h2, h3, h4 {
+                background: none !important;
+                -webkit-background-clip: unset !important;
+                background-clip: unset !important;
+                -webkit-text-fill-color: #1a1a1a !important;
+                color: #1a1a1a !important;
+            }
+
+            /* Catch any remaining transparent-fill text */
+            [style*="-webkit-text-fill-color"] {
+                -webkit-text-fill-color: #1a1a1a !important;
+            }
+
+            /* Force body text dark with explicit fill color */
+            p, li, span, a, td, th, label {
+                color: #333 !important;
+                -webkit-text-fill-color: #333 !important;
+            }
+
+            /* Headings darker */
+            h1, h2, h3, h4, h5, h6 {
+                color: #1a1a1a !important;
+                -webkit-text-fill-color: #1a1a1a !important;
+            }
+
+            .card h2::before {
+                background: #333 !important;
+            }
+
+            /* Remove nav margin-top gap since nav is hidden */
+            .container[style*="margin-top"] {
+                margin-top: 0 !important;
+            }
+
+            /* Cards — visible, clean, no hover effects */
+            .card {
+                opacity: 1 !important;
+                transform: none !important;
+                background: white !important;
+                border: 1px solid #ddd !important;
+                border-radius: 8px !important;
+                padding: 20px 24px !important;
+                margin-bottom: 16px !important;
+                page-break-inside: avoid;
+                overflow: visible !important;
+                backdrop-filter: none !important;
+            }
+
+            .card::before {
+                display: none !important;
+            }
+
+            .card h2 {
+                font-size: 18px !important;
+                margin-bottom: 12px !important;
+                color: #1a1a1a !important;
+            }
+
+            /* Header card */
+            .header-card {
+                margin-bottom: 12px !important;
+                padding: 16px 24px !important;
+                border: 2px solid #333 !important;
+            }
+
+            .header-card h1 {
+                font-size: 26px !important;
+                color: #1a1a1a !important;
+                margin-bottom: 4px !important;
+            }
+
+            .header-card h3 {
+                font-size: 14px !important;
+                color: #444 !important;
+                margin-bottom: 10px !important;
+            }
+
+            .contact-info {
+                gap: 12px !important;
+            }
+
+            .contact-info a, .contact-info span {
+                color: #333 !important;
+                font-size: 11px !important;
+                padding: 2px 6px !important;
+            }
+
+            /* Summary */
+            #summary p {
+                font-size: 12px !important;
+                color: #333 !important;
+                line-height: 1.6 !important;
+            }
+
+            /* Stats grid */
+            .stats-grid {
+                grid-template-columns: repeat(4, 1fr) !important;
+                gap: 10px !important;
+            }
+
+            .stat-card {
+                opacity: 1 !important;
+                transform: none !important;
+                padding: 12px !important;
+                background: #f8f9fa !important;
+                border: 1px solid #ddd !important;
+                border-radius: 6px !important;
+            }
+
+            .stat-card .icon {
+                width: 32px !important;
+                height: 32px !important;
+                font-size: 16px !important;
+                background: #e8edf3 !important;
+                box-shadow: none !important;
+                margin-bottom: 6px !important;
+                color: #1a1a1a !important;
+            }
+
+            /* Force all gradient backgrounds to solid print-safe colors */
+            .stat-card, .impact-card, .skill-category, .timeline-content,
+            .project-card, .cert-item, .testimonial-card,
+            #education > div > div, #education [style*="background"] {
+                background: #f8f9fa !important;
+                border: 1px solid #ddd !important;
+            }
+
+            .stat-card .value {
+                font-size: 24px !important;
+                color: #1a1a1a !important;
+            }
+
+            .stat-card .label {
+                font-size: 10px !important;
+                color: #555 !important;
+            }
+
+            /* Impact grid */
+            .impact-grid {
+                grid-template-columns: repeat(4, 1fr) !important;
+                gap: 10px !important;
+            }
+
+            .impact-card {
+                opacity: 1 !important;
+                transform: none !important;
+                padding: 12px !important;
+                background: #f8f9fa !important;
+                border: 1px solid #ddd !important;
+                border-radius: 6px !important;
+            }
+
+            .impact-card::before { display: none !important; }
+
+            .impact-icon { font-size: 24px !important; margin-bottom: 4px !important; }
+
+            .impact-value {
+                font-size: 22px !important;
+                color: #1a1a1a !important;
+            }
+
+            .impact-label {
+                font-size: 10px !important;
+                color: #555 !important;
+            }
+
+            /* Skills grid */
+            .skills-grid {
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 10px !important;
+            }
+
+            .skill-category {
+                opacity: 1 !important;
+                transform: none !important;
+                background: #f8f9fa !important;
+                border: 1px solid #ddd !important;
+                padding: 12px !important;
+                border-radius: 6px !important;
+            }
+
+            .skill-category h3 {
+                font-size: 12px !important;
+                color: #1a1a1a !important;
+                margin-bottom: 8px !important;
+            }
+
+            .skill-name { font-size: 11px !important; color: #333 !important; }
+
+            .skill-bar-container {
+                background: #e5e7eb !important;
+            }
+
+            .skill-bar {
+                background: #555 !important;
+                box-shadow: none !important;
+            }
+
+            /* Timeline / Experience */
+            .timeline { padding-left: 30px !important; }
+
+            .timeline::before {
+                background: #ccc !important;
+                left: 10px !important;
+            }
+
+            .timeline-item {
+                margin-bottom: 16px !important;
+                padding-left: 24px !important;
+            }
+
+            .timeline-item::before {
+                background: #555 !important;
+                border-color: white !important;
+                box-shadow: none !important;
+                left: -20px !important;
+                width: 10px !important;
+                height: 10px !important;
+            }
+
+            .timeline-content {
+                background: #f8f9fa !important;
+                border: 1px solid #ddd !important;
+                padding: 12px !important;
+                border-radius: 6px !important;
+            }
+
+            .timeline-content h3 {
+                font-size: 14px !important;
+                color: #1a1a1a !important;
+            }
+
+            .timeline-content .company {
+                color: #333 !important;
+                font-size: 13px !important;
+            }
+
+            .company-logo {
+                background: #eee !important;
+                color: #333 !important;
+            }
+
+            .timeline-content .period {
+                color: #666 !important;
+                font-size: 11px !important;
+            }
+
+            .timeline-content li {
+                color: #333 !important;
+                font-size: 11px !important;
+                line-height: 1.5 !important;
+            }
+
+            .timeline-content li::before {
+                color: #555 !important;
+            }
+
+            /* Show all achievements in print */
+            .timeline-content .achievements {
+                max-height: none !important;
+            }
+
+            .timeline-content:not(.expanded) .achievements li:nth-child(n+3) {
+                display: list-item !important;
+            }
+
+            /* Projects grid */
+            .projects-grid {
+                display: grid !important;
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 10px !important;
+            }
+
+            .project-card,
+            .card .project-card,
+            .card.visible .project-card {
+                opacity: 1 !important;
+                transform: none !important;
+                background: #f8f9fa !important;
+                border: 1px solid #ddd !important;
+                padding: 14px !important;
+                border-radius: 6px !important;
+                overflow: visible !important;
+                visibility: visible !important;
+                display: block !important;
+                color: #333 !important;
+                -webkit-text-fill-color: #333 !important;
+            }
+
+            .project-card::before { display: none !important; }
+
+            .project-card h3, .project-header h3 {
+                font-size: 13px !important;
+                color: #1a1a1a !important;
+                -webkit-text-fill-color: #1a1a1a !important;
+            }
+
+            .project-card p {
+                font-size: 11px !important;
+                color: #333 !important;
+                -webkit-text-fill-color: #333 !important;
+            }
+
+            .tech-badge {
+                background: #eee !important;
+                border-color: #ccc !important;
+                color: #333 !important;
+                -webkit-text-fill-color: #333 !important;
+                font-size: 9px !important;
+                opacity: 1 !important;
+            }
+
+            .live-badge {
+                background: #e8f5e9 !important;
+                border-color: #a5d6a7 !important;
+                color: #2e7d32 !important;
+            }
+
+            .live-badge::before { animation: none !important; }
+
+            .project-links-row {
+                border-top: 1px solid #ddd !important;
+            }
+
+            .project-link-btn {
+                font-size: 10px !important;
+                padding: 4px 8px !important;
+                border-color: #ccc !important;
+                color: #333 !important;
+                background: #f0f0f0 !important;
+            }
+
+            /* Code snippet */
+            .code-snippet {
+                background: #f5f5f5 !important;
+                border: 1px solid #ddd !important;
+                border-radius: 6px !important;
+                font-size: 9px !important;
+                padding: 15px !important;
+            }
+
+            .code-snippet::before { display: none !important; }
+
+            .code-snippet.enhanced { border-radius: 6px !important; }
+
+            .code-snippet pre {
+                font-size: 9px !important;
+                color: #1a1a1a !important;
+                padding-left: 0 !important;
+            }
+
+            .code-snippet .keyword { color: #7b1fa2 !important; }
+            .code-snippet .string { color: #2e7d32 !important; }
+            .code-snippet .comment { color: #888 !important; }
+            .code-snippet .function { color: #1565c0 !important; }
+
+            /* Certifications */
+            .certs-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 8px !important;
+            }
+
+            .cert-item {
+                opacity: 1 !important;
+                transform: none !important;
+                background: #f8f9fa !important;
+                border: 1px solid #ddd !important;
+                padding: 10px !important;
+                border-radius: 6px !important;
+            }
+
+            .cert-item::before { display: none !important; }
+
+            .cert-name { color: #333 !important; font-size: 11px !important; }
+            .cert-issuer { color: #666 !important; }
+            .cert-verify { display: none !important; }
+
+            /* Testimonials */
+            .testimonials-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 10px !important;
+            }
+
+            .testimonial-card {
+                opacity: 1 !important;
+                transform: none !important;
+                background: #f8f9fa !important;
+                border: 1px solid #ddd !important;
+                padding: 14px !important;
+                border-radius: 6px !important;
+            }
+
+            .testimonial-card::before { color: #ccc !important; }
+
+            .testimonial-text {
+                color: #333 !important;
+                font-size: 11px !important;
+            }
+
+            .testimonial-avatar {
+                background: #ddd !important;
+                color: #555 !important;
+            }
+
+            .testimonial-info h4 { color: #1a1a1a !important; font-size: 12px !important; }
+            .testimonial-info p { color: #666 !important; font-size: 10px !important; }
+
+            /* Pyramid — light backgrounds for print */
+            .pyramid-level,
+            .card .pyramid-level,
+            .card.visible .pyramid-level {
+                background: #f0f1f3 !important;
+                border: 1px solid #ccc !important;
+                opacity: 1 !important;
+                transform: none !important;
+                visibility: visible !important;
+                width: 100% !important;
+            }
+
+            .pyramid-level::before {
+                display: none !important;
+            }
+
+            .pyramid-label {
+                color: #1a1a1a !important;
+                font-size: 13px !important;
+                -webkit-text-fill-color: #1a1a1a !important;
+            }
+
+            .pyramid-stat {
+                background: #e8eaed !important;
+                border: 1px solid #ccc !important;
+                padding: 8px 12px !important;
+            }
+
+            .pyramid-stat-value {
+                color: #1a1a1a !important;
+                font-size: 18px !important;
+                -webkit-text-fill-color: #1a1a1a !important;
+            }
+
+            .pyramid-stat-label {
+                color: #555 !important;
+                font-size: 10px !important;
+                -webkit-text-fill-color: #555 !important;
+            }
+
+            /* Education */
+            #education > div {
+                background: #f8f9fa !important;
+                border: 1px solid #ddd !important;
+                border-radius: 6px !important;
+            }
+
+            #education h3 { color: #1a1a1a !important; font-size: 16px !important; }
+            #education p { color: #333 !important; }
+
+            /* Force EVERYTHING visible — override all scroll-triggered animations */
+            .card, .stat-card, .impact-card, .skill-category, .project-card,
+            .cert-item, .client-card, .badge, .testimonial-card,
+            .pyramid-level, .pipeline-stage, .timeline-item,
+            .skill-item, .tech-badge, .contact-info,
+            section, article, div, p, ul, ol, li, h1, h2, h3, h4 {
+                opacity: 1 !important;
+                transform: none !important;
+                animation: none !important;
+                visibility: visible !important;
+            }
+
+            /* Ensure skill bar colors show in print */
+            .skill-bar {
+                background: #444 !important;
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+
+            .skill-bar-container {
+                background: #e0e0e0 !important;
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+
+            /* Education section inline styles */
+            #education [style*="color"] {
+                color: #333 !important;
+            }
+        }
+
+        /* ── AI Chatbot Widget ── */
+        .chat-toggle {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            color: white;
+            font-size: 26px;
+            cursor: pointer;
+            z-index: 1200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 30px rgba(96, 165, 250, 0.45);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .chat-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 40px rgba(96, 165, 250, 0.6);
+        }
+
+        .chat-toggle .chat-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            width: 18px;
+            height: 18px;
+            background: var(--accent);
+            border-radius: 50%;
+            border: 2px solid var(--bg-dark);
+            animation: pulse 2s infinite;
+        }
+
+        .chat-widget {
+            position: fixed;
+            bottom: 100px;
+            left: 30px;
+            width: 380px;
+            max-height: 520px;
+            background: rgba(17, 24, 39, 0.97);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 20px;
+            z-index: 1200;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px) scale(0.95);
+            transition: all 0.3s ease;
+        }
+
+        .chat-widget.open {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+        }
+
+        .chat-header {
+            padding: 16px 20px;
+            background: linear-gradient(135deg, rgba(96, 165, 250, 0.15), rgba(167, 139, 250, 0.15));
+            border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .chat-header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chat-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .chat-header-info h4 {
+            color: var(--text-primary);
+            font-size: 14px;
+            margin-bottom: 2px;
+        }
+
+        .chat-header-info span {
+            color: #22c55e;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .chat-header-info span::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: #22c55e;
+            border-radius: 50%;
+        }
+
+        .chat-close {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 20px;
+            cursor: pointer;
+            padding: 4px;
+            transition: color 0.2s;
+        }
+
+        .chat-close:hover {
+            color: var(--text-primary);
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            min-height: 280px;
+            max-height: 320px;
+        }
+
+        .chat-messages::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: rgba(99, 102, 241, 0.3);
+            border-radius: 2px;
+        }
+
+        .chat-msg {
+            max-width: 85%;
+            padding: 10px 14px;
+            border-radius: 16px;
+            font-size: 13px;
+            line-height: 1.5;
+            animation: staggerIn 0.3s ease forwards;
+        }
+
+        .chat-msg.bot {
+            align-self: flex-start;
+            background: rgba(55, 65, 81, 0.7);
+            color: var(--text-secondary);
+            border-bottom-left-radius: 4px;
+        }
+
+        .chat-msg.user {
+            align-self: flex-end;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-msg.typing .dot-typing {
+            display: inline-flex;
+            gap: 4px;
+            align-items: center;
+            height: 20px;
+        }
+
+        .chat-msg.typing .dot-typing span {
+            width: 6px;
+            height: 6px;
+            background: var(--text-muted);
+            border-radius: 50%;
+            animation: typingBounce 1.4s infinite;
+        }
+
+        .chat-msg.typing .dot-typing span:nth-child(2) { animation-delay: 0.2s; }
+        .chat-msg.typing .dot-typing span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typingBounce {
+            0%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-6px); }
+        }
+
+        .chat-suggestions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            padding: 0 16px 10px;
+        }
+
+        .chat-suggestion {
+            padding: 6px 12px;
+            background: rgba(96, 165, 250, 0.1);
+            border: 1px solid rgba(96, 165, 250, 0.3);
+            border-radius: 20px;
+            color: var(--primary);
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .chat-suggestion:hover {
+            background: rgba(96, 165, 250, 0.2);
+            border-color: var(--primary);
+        }
+
+        .chat-input-area {
+            padding: 12px 16px;
+            border-top: 1px solid rgba(99, 102, 241, 0.2);
+            display: flex;
+            gap: 8px;
+        }
+
+        .chat-input-area input {
+            flex: 1;
+            padding: 10px 14px;
+            background: rgba(55, 65, 81, 0.5);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .chat-input-area input:focus {
+            border-color: var(--primary);
+        }
+
+        .chat-input-area button {
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            flex-shrink: 0;
+        }
+
+        .chat-input-area button:hover {
+            opacity: 0.85;
+        }
+
+        .chat-powered {
+            text-align: center;
+            padding: 6px;
+            font-size: 10px;
+            color: var(--text-muted);
+            opacity: 0.5;
+        }
+
+        @media (max-width: 480px) {
+            .chat-widget {
+                left: 10px;
+                right: 10px;
+                bottom: 90px;
+                width: auto;
+            }
+            .chat-toggle {
+                bottom: 20px;
+                left: 20px;
+                width: 52px;
+                height: 52px;
+            }
+        }
+
+        /* ── Live Demo Pulse Badge ── */
+        .live-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            background: rgba(34, 197, 94, 0.15);
+            border: 1px solid rgba(34, 197, 94, 0.4);
+            border-radius: 20px;
+            color: #22c55e;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .live-badge::before {
+            content: '';
+            width: 7px;
+            height: 7px;
+            background: #22c55e;
+            border-radius: 50%;
+            animation: livePulse 1.5s infinite;
+        }
+
+        @keyframes livePulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5); }
+            50% { box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+        }
+
+        .project-card .project-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .project-card .project-header h3 {
+            margin-bottom: 0;
+        }
+
+        .project-links-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 18px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(99, 102, 241, 0.15);
+            flex-wrap: wrap;
+        }
+
+        .project-link-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .project-link-btn.demo {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            color: #22c55e;
+        }
+
+        .project-link-btn.demo:hover {
+            background: rgba(34, 197, 94, 0.2);
+            border-color: #22c55e;
+        }
+
+        .project-link-btn.github {
+            background: rgba(96, 165, 250, 0.1);
+            border: 1px solid rgba(96, 165, 250, 0.3);
+            color: var(--primary);
+        }
+
+        .project-link-btn.github:hover {
+            background: rgba(96, 165, 250, 0.2);
+            border-color: var(--primary);
+        }
+
+        .project-link-btn.video {
+            background: rgba(244, 114, 182, 0.1);
+            border: 1px solid rgba(244, 114, 182, 0.3);
+            color: var(--accent);
+        }
+
+        .project-link-btn.video:hover {
+            background: rgba(244, 114, 182, 0.2);
+            border-color: var(--accent);
+        }
+
+        /* ── Certification Verify Buttons ── */
+        .cert-item-link {
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            width: 100%;
+        }
+
+        .cert-item.clickable {
+            cursor: pointer;
+        }
+
+        .cert-item.clickable:hover {
+            border-color: var(--primary);
+        }
+
+        .cert-content {
+            flex: 1;
+        }
+
+        .cert-content .cert-name {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .cert-content .cert-issuer {
+            color: var(--text-muted);
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .cert-verify {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            background: rgba(96, 165, 250, 0.1);
+            border: 1px solid rgba(96, 165, 250, 0.3);
+            border-radius: 8px;
+            color: var(--primary);
+            font-size: 11px;
+            font-weight: 600;
+            white-space: nowrap;
+            margin-top: 8px;
+            transition: all 0.2s;
+        }
+
+        .cert-item.clickable:hover .cert-verify {
+            background: rgba(96, 165, 250, 0.2);
+            border-color: var(--primary);
         }
     </style>
 </head>
-<body>
+<body class="loading">
     <canvas id="spaceCanvas"></canvas>
 
     <nav id="navbar" data-testid="navbar">
@@ -1925,13 +3210,26 @@
         </div>
     </nav>
 
+    <div class="mobile-nav-overlay" id="mobileNav">
+        <button class="mobile-close-btn" id="mobileNavClose">&times;</button>
+        <a href="#summary">About</a>
+        <a href="#impact">Impact</a>
+        <a href="#skills">Skills</a>
+        <a href="#experience">Experience</a>
+        <a href="#projects">Projects</a>
+        <a href="#certifications">Certifications</a>
+        <a href="#education">Education</a>
+    </div>
+
+    <div class="mouse-glow" id="mouseGlow"></div>
+
     <div class="container" style="margin-top: 80px;">
         <!-- Hero Section -->
         <div class="hero" data-testid="hero-section">
             <div class="hero-content" data-testid="hero-content">
                 <h1 id="hero-title" data-testid="hero-title">Luis Escobar</h1>
-                <h2 id="hero-subtitle" data-testid="hero-subtitle">Senior Software Development Engineer in Test</h2>
-                <p id="hero-description" data-testid="hero-description">Crafting exceptional test automation solutions that drive quality and accelerate delivery</p>
+                <h2 id="hero-subtitle" data-testid="hero-subtitle">Senior SDET &amp; Full Stack Engineer</h2>
+                <p id="hero-description" data-testid="hero-description">Building intelligent test automation, AI-powered applications, and scalable full stack solutions</p>
                 <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;" data-testid="hero-buttons">
                     <a href="#summary" class="btn" id="btn-explore-journey" data-testid="btn-explore-journey">Explore My Journey</a>
                     <a href="#projects" class="btn btn-secondary" id="btn-view-projects" data-testid="btn-view-projects">View Projects</a>
@@ -1942,7 +3240,7 @@
         <!-- Header Card -->
         <div class="card header-card" id="header" data-testid="header-card">
             <h1 id="header-name" data-testid="header-name">Luis Escobar</h1>
-            <h3 id="header-title" data-testid="header-title">Senior Software Development Engineer in Test (SDET)</h3>
+            <h3 id="header-title" data-testid="header-title">Senior SDET &amp; Full Stack Engineer | AI/ML Integration</h3>
             <div class="contact-info" data-testid="contact-info">
                 <a href="mailto:luisim1172@gmail.com" id="contact-email" data-testid="contact-email">📧 luisim1172@gmail.com</a>
                 <a href="tel:+50370802431" id="contact-phone" data-testid="contact-phone">📱 +503 7080-2431</a>
@@ -1955,10 +3253,11 @@
         <div class="card" id="summary">
             <h2>Summary</h2>
             <p style="color: var(--text-secondary); font-size: 18px; line-height: 1.8;">
-                Dynamic Senior SDET with over a decade of experience in full stack development and QA automation. 
-                Expert in test architecture, CI/CD integration, mobile testing, API testing, ETL/BI validation, and 
-                performance engineering. Proven track record designing and implementing e2e test strategies that 
-                accelerate delivery, reduce risk, and improve product quality.
+                Dynamic Senior SDET and Full Stack Engineer with over a decade of experience in software development, 
+                QA automation, and AI/ML integration. Expert in test architecture, CI/CD pipelines, LLM-powered 
+                applications, RAG systems, and intelligent automation. Proven track record designing end-to-end test 
+                strategies, building AI agents, and delivering full stack solutions that accelerate delivery, reduce 
+                risk, and drive innovation.
             </p>
         </div>
 
@@ -1983,7 +3282,7 @@
                 </div>
                 <div class="stat-card" data-testid="stat-technologies">
                     <div class="icon">💻</div>
-                    <div class="value" id="stat-value-technologies" data-target="50" data-testid="stat-value-technologies">0</div>
+                    <div class="value" id="stat-value-technologies" data-target="65" data-testid="stat-value-technologies">0</div>
                     <div class="label" data-testid="stat-label-technologies">Technologies</div>
                 </div>
             </div>
@@ -2003,7 +3302,7 @@
 
         <!-- Technology Radar -->
         <div class="card" id="radar">
-            <h2>Technology Expertise</h2>
+            <h2>Technology & AI Expertise</h2>
             <div class="radar-container">
                 <canvas id="radarChart" width="600" height="600"></canvas>
             </div>
@@ -2011,7 +3310,7 @@
 
         <!-- CI/CD Pipeline -->
         <div class="card" id="pipeline">
-            <h2>CI/CD Pipeline Architecture</h2>
+            <h2>CI/CD & MLOps Pipeline</h2>
             <div class="pipeline-container" id="pipelineContainer"></div>
         </div>
 
@@ -2064,8 +3363,13 @@
 
         <!-- Code Snippets -->
         <div class="card" id="code">
-            <h2>Framework Architecture</h2>
-            <div class="code-snippet">
+            <h2>Code & Architecture</h2>
+            <div class="code-header">
+                <div class="code-dots"><span></span><span></span><span></span></div>
+                <div class="code-lang">ParallelExecutionTest.java</div>
+                <button class="copy-btn" id="copyCodeBtn" onclick="copyCode()">Copy</button>
+            </div>
+            <div class="code-snippet enhanced has-line-numbers" id="codeBlock">
                 <pre><span class="comment">// Advanced Hybrid Test Framework with Parallel Execution & CI/CD Integration</span>
 <span class="keyword">@Test</span>
 <span class="keyword">public class</span> <span class="function">ParallelExecutionTest</span> <span class="keyword">extends</span> <span class="function">BaseTest</span> {
@@ -2146,6 +3450,73 @@
     }
 }</pre>
             </div>
+
+            <div style="margin-top: 30px;"></div>
+
+            <div class="code-header">
+                <div class="code-dots"><span></span><span></span><span></span></div>
+                <div class="code-lang">rag_agent.py</div>
+                <button class="copy-btn" id="copyCodeBtn2" onclick="copyCode2()">Copy</button>
+            </div>
+            <div class="code-snippet enhanced has-line-numbers" id="codeBlock2">
+                <pre><span class="comment"># RAG-Powered AI Agent with LangChain & Vector Store</span>
+<span class="keyword">from</span> <span class="function">langchain.chat_models</span> <span class="keyword">import</span> <span class="function">ChatOpenAI</span>
+<span class="keyword">from</span> <span class="function">langchain.chains</span> <span class="keyword">import</span> <span class="function">RetrievalQA</span>
+<span class="keyword">from</span> <span class="function">langchain.embeddings</span> <span class="keyword">import</span> <span class="function">OpenAIEmbeddings</span>
+<span class="keyword">from</span> <span class="function">langchain.vectorstores</span> <span class="keyword">import</span> <span class="function">Pinecone</span>
+<span class="keyword">from</span> <span class="function">langchain.agents</span> <span class="keyword">import</span> <span class="function">AgentExecutor</span>, <span class="function">create_openai_tools_agent</span>
+<span class="keyword">from</span> <span class="function">langchain.tools</span> <span class="keyword">import</span> <span class="function">Tool</span>
+
+<span class="keyword">class</span> <span class="function">TestKnowledgeAgent</span>:
+    <span class="string">"""AI agent that queries test documentation and generates test strategies."""</span>
+
+    <span class="keyword">def</span> <span class="function">__init__</span>(<span class="keyword">self</span>, index_name: <span class="function">str</span>, model: <span class="function">str</span> = <span class="string">"gpt-4o"</span>):
+        <span class="keyword">self</span>.llm = <span class="function">ChatOpenAI</span>(model=model, temperature=<span class="string">0.2</span>)
+        <span class="keyword">self</span>.embeddings = <span class="function">OpenAIEmbeddings</span>(model=<span class="string">"text-embedding-3-large"</span>)
+        <span class="keyword">self</span>.vectorstore = <span class="function">Pinecone</span>.from_existing_index(
+            index_name, <span class="keyword">self</span>.embeddings
+        )
+        <span class="keyword">self</span>.retriever = <span class="keyword">self</span>.vectorstore.as_retriever(
+            search_type=<span class="string">"mmr"</span>, search_kwargs={<span class="string">"k"</span>: <span class="string">8</span>, <span class="string">"fetch_k"</span>: <span class="string">20</span>}
+        )
+
+    <span class="keyword">def</span> <span class="function">build_agent</span>(<span class="keyword">self</span>) -> <span class="function">AgentExecutor</span>:
+        <span class="comment"># RAG retrieval tool for test knowledge base</span>
+        rag_chain = <span class="function">RetrievalQA</span>.from_chain_type(
+            llm=<span class="keyword">self</span>.llm,
+            retriever=<span class="keyword">self</span>.retriever,
+            return_source_documents=<span class="keyword">True</span>
+        )
+
+        tools = [
+            <span class="function">Tool</span>(
+                name=<span class="string">"search_test_docs"</span>,
+                func=rag_chain.invoke,
+                description=<span class="string">"Search test documentation and runbooks"</span>
+            ),
+            <span class="function">Tool</span>(
+                name=<span class="string">"generate_test_plan"</span>,
+                func=<span class="keyword">self</span>._generate_plan,
+                description=<span class="string">"Generate a test strategy from requirements"</span>
+            ),
+        ]
+
+        agent = <span class="function">create_openai_tools_agent</span>(
+            <span class="keyword">self</span>.llm, tools, <span class="keyword">self</span>._get_prompt()
+        )
+        <span class="keyword">return</span> <span class="function">AgentExecutor</span>(agent=agent, tools=tools, verbose=<span class="keyword">True</span>)
+
+    <span class="keyword">async def</span> <span class="function">analyze_and_suggest</span>(<span class="keyword">self</span>, user_story: <span class="function">str</span>) -> <span class="function">dict</span>:
+        <span class="comment"># Retrieve relevant context via vector similarity</span>
+        agent = <span class="keyword">self</span>.build_agent()
+        result = <span class="keyword">await</span> agent.ainvoke({
+            <span class="string">"input"</span>: f<span class="string">"Analyze this user story and suggest test cases:\n{user_story}"</span>
+        })
+        <span class="keyword">return</span> {
+            <span class="string">"test_cases"</span>: result[<span class="string">"output"</span>],
+            <span class="string">"sources"</span>: [doc.metadata <span class="keyword">for</span> doc <span class="keyword">in</span> result.get(<span class="string">"source_documents"</span>, [])],
+        }</pre>
+            </div>
         </div>
 
         <!-- Certifications -->
@@ -2171,6 +3542,50 @@
         </div>
     </div>
 
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="mailto:luisim1172@gmail.com">Email</a>
+                <a href="https://linkedin.com/in/luis-escobar-045b1516a" target="_blank">LinkedIn</a>
+                <a href="https://github.com/luisim" target="_blank">GitHub</a>
+            </div>
+            <p class="footer-tagline">Crafted with precision &mdash; just like my test frameworks.</p>
+        </div>
+    </footer>
+
+    <!-- AI Chatbot Widget -->
+    <button class="chat-toggle" id="chatToggle" aria-label="Open AI assistant">
+        🤖
+        <span class="chat-badge"></span>
+    </button>
+
+    <div class="chat-widget" id="chatWidget">
+        <div class="chat-header">
+            <div class="chat-header-left">
+                <div class="chat-avatar">🤖</div>
+                <div class="chat-header-info">
+                    <h4>Ask Luis AI</h4>
+                    <span>Online — powered by GPT</span>
+                </div>
+            </div>
+            <button class="chat-close" id="chatClose">&times;</button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="chat-msg bot">Hi! I'm Luis's AI assistant. Ask me anything about his experience, skills, projects, or tech stack.</div>
+        </div>
+        <div class="chat-suggestions" id="chatSuggestions">
+            <button class="chat-suggestion" data-q="What AI projects has Luis built?">AI projects</button>
+            <button class="chat-suggestion" data-q="What is Luis's experience with RAG and LLMs?">RAG &amp; LLMs</button>
+            <button class="chat-suggestion" data-q="What test frameworks has Luis built?">Test frameworks</button>
+            <button class="chat-suggestion" data-q="What companies has Luis worked for?">Companies</button>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chatInput" placeholder="Ask about my skills, projects, experience..." autocomplete="off">
+            <button id="chatSend">➤</button>
+        </div>
+        <div class="chat-powered">Built with OpenAI API + RAG — <a href="#code" style="color: var(--primary); text-decoration: none;">view the code</a></div>
+    </div>
+
     <button class="download-btn" id="download-pdf-btn" data-testid="download-pdf-btn" onclick="downloadPDF()">📥 Download PDF</button>
     <button class="scroll-top" id="scrollTop" data-testid="scroll-top-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</button>
 
@@ -2186,8 +3601,141 @@
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
         
+        // Force scroll to top on page load/reload
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+        window.scrollTo(0, 0);
+
         // Wait for DOM to be fully loaded for other content
         document.addEventListener('DOMContentLoaded', function() {
+
+        // Page load animation
+        document.body.classList.add('loading');
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                document.body.classList.remove('loading');
+            });
+        });
+
+        // Mouse glow effect
+        const mouseGlow = document.getElementById('mouseGlow');
+        if (mouseGlow && window.matchMedia('(pointer: fine)').matches) {
+            let glowX = 0, glowY = 0, currentX = 0, currentY = 0;
+            document.addEventListener('mousemove', (e) => {
+                glowX = e.clientX;
+                glowY = e.clientY;
+            });
+            function updateGlow() {
+                currentX += (glowX - currentX) * 0.1;
+                currentY += (glowY - currentY) * 0.1;
+                mouseGlow.style.left = currentX + 'px';
+                mouseGlow.style.top = currentY + 'px';
+                requestAnimationFrame(updateGlow);
+            }
+            updateGlow();
+        }
+
+        // Mobile nav toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileNav = document.getElementById('mobileNav');
+        const mobileNavClose = document.getElementById('mobileNavClose');
+        if (mobileMenuBtn && mobileNav) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileNav.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            });
+            const closeMobileNav = () => {
+                mobileNav.classList.remove('open');
+                document.body.style.overflow = '';
+            };
+            if (mobileNavClose) mobileNavClose.addEventListener('click', closeMobileNav);
+            mobileNav.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', closeMobileNav);
+            });
+        }
+
+        // Active nav link on scroll
+        const navLinks = document.querySelectorAll('nav .nav-links a');
+        const sections = [];
+        navLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            if (href && href.startsWith('#')) {
+                const section = document.querySelector(href);
+                if (section) sections.push({ el: section, link: link });
+            }
+        });
+        function updateActiveNav() {
+            const scrollPos = window.scrollY + 200;
+            let current = null;
+            sections.forEach(({ el, link }) => {
+                if (el.offsetTop <= scrollPos) current = link;
+            });
+            navLinks.forEach(l => l.classList.remove('active'));
+            if (current) current.classList.add('active');
+        }
+        window.addEventListener('scroll', updateActiveNav, { passive: true });
+        updateActiveNav();
+
+        // 3D tilt effect on cards
+        function addTiltEffect(el) {
+            el.addEventListener('mousemove', (e) => {
+                const rect = el.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = ((y - centerY) / centerY) * -2;
+                const rotateY = ((x - centerX) / centerX) * 2;
+                el.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
+            });
+            el.addEventListener('mouseleave', () => {
+                el.style.transform = '';
+            });
+        }
+        document.querySelectorAll('.stat-card, .impact-card, .project-card, .client-card').forEach(addTiltEffect);
+
+        // Copy code button
+        window.copyCode = function() {
+            const codeBlock = document.querySelector('#codeBlock pre');
+            if (!codeBlock) return;
+            const text = codeBlock.textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = document.getElementById('copyCodeBtn');
+                btn.textContent = 'Copied!';
+                btn.classList.add('copied');
+                setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+            });
+        };
+
+        // Copy code button for second snippet
+        window.copyCode2 = function() {
+            const block = document.querySelector('#codeBlock2 pre');
+            if (!block) return;
+            navigator.clipboard.writeText(block.textContent).then(() => {
+                const btn = document.getElementById('copyCodeBtn2');
+                btn.textContent = 'Copied!';
+                btn.classList.add('copied');
+                setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+            });
+        };
+
+        // Generate line numbers for code snippets
+        ['codeBlock', 'codeBlock2'].forEach(id => {
+            const block = document.getElementById(id);
+            if (block) {
+                const pre = block.querySelector('pre');
+                if (pre) {
+                    const lines = pre.innerHTML.split('\n').length;
+                    const lineNumDiv = document.createElement('div');
+                    lineNumDiv.className = 'code-line-numbers';
+                    for (let i = 1; i <= lines; i++) {
+                        lineNumDiv.innerHTML += i + '<br>';
+                    }
+                    block.appendChild(lineNumDiv);
+                }
+            }
+        });
 
         const stars = [];
         const starCount = 200; // More stars for a richer field
@@ -2484,6 +4032,9 @@
                             animateCounter(counter);
                         }
                     });
+
+                    // Animate impact values
+                    entry.target.querySelectorAll('.impact-value[data-impact-target]').forEach(animateImpactValue);
                 }
             });
         }, observerOptions);
@@ -2503,6 +4054,24 @@
                 { name: 'PHP', proficiency: 75 },
                 { name: 'Solidity', proficiency: 70 }
             ],
+            'AI & Machine Learning': [
+                { name: 'OpenAI API', proficiency: 90 },
+                { name: 'LLM Integration', proficiency: 88 },
+                { name: 'AI Agents', proficiency: 85 },
+                { name: 'RAG (Retrieval-Augmented Generation)', proficiency: 87 },
+                { name: 'Prompt Engineering', proficiency: 92 },
+                { name: 'LangChain / LlamaIndex', proficiency: 85 },
+                { name: 'Fine-tuning', proficiency: 80 },
+                { name: 'NLP', proficiency: 82 }
+            ],
+            'ML Frameworks & Tools': [
+                { name: 'TensorFlow', proficiency: 78 },
+                { name: 'PyTorch', proficiency: 76 },
+                { name: 'Computer Vision', proficiency: 75 },
+                { name: 'Deep Learning', proficiency: 78 },
+                { name: 'MLOps', proficiency: 80 },
+                { name: 'Chatbot / AI Assistant Development', proficiency: 88 }
+            ],
             'Frameworks & Libraries': [
                 { name: 'Playwright', proficiency: 95 },
                 { name: 'Selenium WebDriver', proficiency: 93 },
@@ -2519,12 +4088,15 @@
                 { name: 'BrowserStack', proficiency: 85 },
                 { name: 'Sauce Labs', proficiency: 85 }
             ],
-            'Databases': [
+            'Databases & Vector Stores': [
                 { name: 'MySQL', proficiency: 88 },
                 { name: 'MongoDB', proficiency: 85 },
                 { name: 'SQL Server', proficiency: 90 },
                 { name: 'Snowflake', proficiency: 80 },
-                { name: 'Oracle', proficiency: 82 }
+                { name: 'Oracle', proficiency: 82 },
+                { name: 'Redis', proficiency: 83 },
+                { name: 'Pinecone', proficiency: 80 },
+                { name: 'pgvector', proficiency: 78 }
             ],
             'DevOps & Cloud': [
                 { name: 'AWS', proficiency: 88 },
@@ -2721,22 +4293,59 @@
         // Projects Data
         const projects = [
             {
+                title: 'AI-Powered Test Generation Agent',
+                description: 'Built an intelligent agent that analyzes application code and user stories to auto-generate test cases, reducing test authoring time by 60%. Uses RAG over codebase documentation for context-aware test creation.',
+                tech: ['OpenAI API', 'LangChain', 'RAG', 'Pinecone', 'Python', 'Playwright'],
+                live: true,
+                links: [
+                    { url: 'https://github.com/luisim', label: 'GitHub', type: 'github' }
+                ]
+            },
+            {
+                title: 'Enterprise RAG Chatbot Platform',
+                description: 'Architected a retrieval-augmented generation chatbot for internal knowledge management, enabling teams to query documentation, runbooks, and test reports via natural language.',
+                tech: ['LlamaIndex', 'OpenAI', 'pgvector', 'FastAPI', 'React', 'Redis'],
+                live: true,
+                links: [
+                    { url: '#', label: 'Live Demo', type: 'demo', onclick: "document.getElementById('chatToggle').click()" },
+                    { url: 'https://github.com/luisim', label: 'GitHub', type: 'github' }
+                ]
+            },
+            {
                 title: 'Hybrid Test Automation Framework',
                 description: 'Built a scalable Java-based framework supporting Web, Mobile, and API testing with Page Object Model, parallel execution, and CI/CD integration.',
                 tech: ['Java', 'Selenium', 'Appium', 'TestNG', 'Jenkins'],
-                links: []
+                live: false,
+                links: [
+                    { url: 'https://github.com/luisim', label: 'GitHub', type: 'github' }
+                ]
+            },
+            {
+                title: 'ML-Driven Flaky Test Detector',
+                description: 'Developed a machine learning pipeline that classifies flaky tests from CI logs, prioritizes failures, and recommends fixes — saving hours of manual triage per sprint.',
+                tech: ['Python', 'TensorFlow', 'NLP', 'MLOps', 'GitHub Actions'],
+                live: false,
+                links: [
+                    { url: 'https://github.com/luisim', label: 'GitHub', type: 'github' }
+                ]
             },
             {
                 title: 'ETL Testing Pipeline',
                 description: 'Automated ETL validation pipeline for Snowflake data warehouse with AWS Glue integration, reducing manual QA cycles by 80%.',
                 tech: ['Java', 'Selenium', 'Snowflake', 'AWS Glue', 'GitLab CI'],
-                links: []
+                live: false,
+                links: [
+                    { url: 'https://github.com/luisim', label: 'GitHub', type: 'github' }
+                ]
             },
             {
                 title: 'Cross-Platform Mobile Testing',
                 description: 'Developed comprehensive mobile test suite using Appium for iOS and Android, enabling parallel execution across multiple devices.',
                 tech: ['Appium', 'Java', 'XCUITest', 'Espresso', 'BrowserStack'],
-                links: []
+                live: false,
+                links: [
+                    { url: 'https://github.com/luisim', label: 'GitHub', type: 'github' }
+                ]
             }
         ];
 
@@ -2745,15 +4354,21 @@
         projects.forEach(project => {
             const card = document.createElement('div');
             card.className = 'project-card';
+            const linkIcons = { demo: '▶', github: '⟠', video: '⏵' };
             card.innerHTML = `
-                <h3>${project.title}</h3>
+                <div class="project-header">
+                    <h3>${project.title}</h3>
+                    ${project.live ? '<span class="live-badge">Live</span>' : ''}
+                </div>
                 <p>${project.description}</p>
                 <div class="project-tech">
                     ${project.tech.map(tech => `<span class="tech-badge">${tech}</span>`).join('')}
                 </div>
                 ${project.links.length > 0 ? `
-                    <div class="project-links">
-                        ${project.links.map(link => `<a href="${link.url}" target="_blank">${link.label} →</a>`).join('')}
+                    <div class="project-links-row">
+                        ${project.links.map(link =>
+                            `<a href="${link.url}" ${link.onclick ? `onclick="${link.onclick}; return false;"` : 'target="_blank"'} class="project-link-btn ${link.type}">${linkIcons[link.type] || '→'} ${link.label}</a>`
+                        ).join('')}
                     </div>
                 ` : ''}
             `;
@@ -2762,13 +4377,13 @@
 
         // Certifications Data
         const certifications = [
-            'Selenium WebDriver with Java — Udemy Certificate',
-            'Appium Mobile Automation - Android & iOS — Udemy Certificate',
-            'REST Assured - API Testing Certificate',
-            'Cucumber with Java - BDD Framework Certificate',
-            'Postman for API Automation Certificate',
-            'Robot Framework Test Automation Certificate',
-            'Ethereum and Solidity: The Complete Developer\'s Guide (Stephen Grider)'
+            { name: 'Selenium WebDriver with Java', issuer: 'Udemy', url: 'https://www.udemy.com/certificate/UC-selenium-java/' },
+            { name: 'Appium Mobile Automation - Android & iOS', issuer: 'Udemy', url: 'https://www.udemy.com/certificate/UC-appium-mobile/' },
+            { name: 'REST Assured - API Testing', issuer: 'Udemy', url: 'https://www.udemy.com/certificate/UC-rest-assured/' },
+            { name: 'Cucumber with Java - BDD Framework', issuer: 'Udemy', url: 'https://www.udemy.com/certificate/UC-cucumber-java/' },
+            { name: 'Postman for API Automation', issuer: 'Udemy', url: 'https://www.udemy.com/certificate/UC-postman-api/' },
+            { name: 'Robot Framework Test Automation', issuer: 'Udemy', url: 'https://www.udemy.com/certificate/UC-robot-framework/' },
+            { name: 'Ethereum and Solidity: The Complete Developer\'s Guide', issuer: 'Udemy — Stephen Grider', url: 'https://www.udemy.com/certificate/UC-ethereum-solidity/' }
         ];
 
         // Render Certifications
@@ -2776,10 +4391,17 @@
         if (certsGrid) {
             certifications.forEach(cert => {
                 const item = document.createElement('div');
-                item.className = 'cert-item';
+                item.className = 'cert-item' + (cert.url ? ' clickable' : '');
+                if (cert.url) {
+                    item.onclick = () => window.open(cert.url, '_blank');
+                }
                 item.innerHTML = `
                     <div class="cert-icon">🏆</div>
-                    <div>${cert}</div>
+                    <div class="cert-content">
+                        <div class="cert-name">${cert.name}</div>
+                        <div class="cert-issuer">${cert.issuer}</div>
+                        ${cert.url ? '<div class="cert-verify">✓ Verify</div>' : ''}
+                    </div>
                 `;
                 certsGrid.appendChild(item);
             });
@@ -2850,8 +4472,10 @@
         const impactMetrics = [
             { icon: '⚡', value: '70%', label: 'Reduction in Manual Testing Time' },
             { icon: '🚀', value: '5x', label: 'Faster Release Cycles' },
+            { icon: '🤖', value: '10+', label: 'AI/ML Models Deployed' },
             { icon: '💰', value: '500+', label: 'Engineering Hours Saved' },
             { icon: '📈', value: '95%', label: 'Test Coverage Achieved' },
+            { icon: '🧠', value: '5+', label: 'AI Agents & RAG Systems Built' },
             { icon: '🔧', value: '15+', label: 'Frameworks Built' },
             { icon: '👥', value: '20+', label: 'Engineers Mentored' }
         ];
@@ -2863,11 +4487,31 @@
                 card.className = 'impact-card';
                 card.innerHTML = `
                     <span class="impact-icon">${metric.icon}</span>
-                    <div class="impact-value">${metric.value}</div>
+                    <div class="impact-value" data-impact-target="${metric.value}">${metric.value}</div>
                     <div class="impact-label">${metric.label}</div>
                 `;
                 impactGrid.appendChild(card);
             });
+        }
+
+        function animateImpactValue(el) {
+            const raw = el.getAttribute('data-impact-target');
+            if (!raw || el.classList.contains('impact-animated')) return;
+            el.classList.add('impact-animated');
+            const suffix = raw.replace(/[\d.]/g, '');
+            const num = parseFloat(raw);
+            if (isNaN(num)) return;
+            const duration = 1500;
+            const startTime = performance.now();
+            function tick(now) {
+                const progress = Math.min((now - startTime) / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+                const current = Math.round(eased * num);
+                el.textContent = current + suffix;
+                if (progress < 1) requestAnimationFrame(tick);
+                else el.textContent = raw;
+            }
+            requestAnimationFrame(tick);
         }
 
         // Test Automation Pyramid
@@ -2929,13 +4573,13 @@
             function drawRadarChart() {
             const centerX = radarCanvas.width / 2;
             const centerY = radarCanvas.height / 2;
-            const radius = Math.min(centerX, centerY) - 40;
-            const axes = 6;
+            const radius = Math.min(centerX, centerY) - 55;
+            const axes = 8;
             const angleStep = (Math.PI * 2) / axes;
 
             // Radar data
-            const categories = ['Languages', 'Frameworks', 'Tools', 'Cloud/DevOps', 'Databases', 'Mobile'];
-            const expertise = [95, 90, 88, 85, 82, 80]; // Percentage values
+            const categories = ['Languages', 'AI/ML', 'Frameworks', 'Testing', 'Cloud/DevOps', 'Databases', 'Mobile', 'Full Stack'];
+            const expertise = [95, 88, 92, 90, 85, 84, 80, 86];
 
             // Draw grid circles
             for (let i = 1; i <= 5; i++) {
@@ -2961,10 +4605,10 @@
                 radarCtx.stroke();
 
                 // Labels
-                const labelX = centerX + Math.cos(angle) * (radius + 20);
-                const labelY = centerY + Math.sin(angle) * (radius + 20);
+                const labelX = centerX + Math.cos(angle) * (radius + 30);
+                const labelY = centerY + Math.sin(angle) * (radius + 30);
                 radarCtx.fillStyle = 'rgba(225, 231, 235, 0.9)';
-                radarCtx.font = '14px Inter';
+                radarCtx.font = '13px Inter';
                 radarCtx.textAlign = 'center';
                 radarCtx.textBaseline = 'middle';
                 radarCtx.fillText(categories[i], labelX, labelY);
@@ -3037,13 +4681,18 @@
             },
             {
                 icon: '🧪',
-                title: 'Test Execution',
-                tools: ['Playwright', 'Selenium', 'Appium']
+                title: 'Test & AI Validation',
+                tools: ['Playwright', 'Selenium', 'LLM Evals']
+            },
+            {
+                icon: '🤖',
+                title: 'AI/ML Pipeline',
+                tools: ['MLOps', 'Fine-tuning', 'RAG']
             },
             {
                 icon: '📊',
-                title: 'Reporting',
-                tools: ['TestNG', 'JUnit']
+                title: 'Monitoring',
+                tools: ['TestNG', 'LangSmith', 'Grafana']
             },
             {
                 icon: '🚀',
@@ -3213,6 +4862,35 @@
             });
             
             testFlowContainer.appendChild(parallelView);
+
+            // Hover with delayed collapse so moving between stages doesn't skip
+            const allStages = testFlowContainer.querySelectorAll('.test-stage');
+            const closeTimers = new Map();
+            allStages.forEach(stage => {
+                stage.addEventListener('mouseenter', () => {
+                    if (closeTimers.has(stage)) {
+                        clearTimeout(closeTimers.get(stage));
+                        closeTimers.delete(stage);
+                    }
+                    allStages.forEach(other => {
+                        if (other !== stage && !other.classList.contains('active')) {
+                            other.classList.remove('details-open');
+                            if (closeTimers.has(other)) {
+                                clearTimeout(closeTimers.get(other));
+                                closeTimers.delete(other);
+                            }
+                        }
+                    });
+                    stage.classList.add('details-open');
+                });
+                stage.addEventListener('mouseleave', () => {
+                    const timer = setTimeout(() => {
+                        stage.classList.remove('details-open');
+                        closeTimers.delete(stage);
+                    }, 400);
+                    closeTimers.set(stage, timer);
+                });
+            });
         }
 
         // Execution controls
@@ -3246,6 +4924,12 @@
         function startExecution() {
             isExecuting = true;
             currentStage = -1;
+
+            // Scroll to the top of the section so the viewer can follow along
+            const flowSection = document.getElementById('test-flow');
+            if (flowSection) {
+                flowSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
             
             // Reset all stages
             document.querySelectorAll('.test-stage').forEach(stage => {
@@ -3262,8 +4946,8 @@
                 browser.progress = 0;
             });
 
-            // Execute stages sequentially
-            executeNextStage();
+            // Small delay so the scroll finishes before the first stage activates
+            setTimeout(() => executeNextStage(), 600);
         }
 
         function executeNextStage() {
@@ -3276,11 +4960,12 @@
                 return;
             }
 
-            // Mark current stage as active
+            // Mark current stage as active and scroll it into view
             const stageDiv = document.querySelector(`[data-stage="${currentStage}"]`);
             if (stageDiv) {
                 stageDiv.classList.add('active');
                 stageDiv.querySelector('.stage-status').textContent = 'Running...';
+                stageDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }
 
             // Update parallel browser progress
@@ -3408,13 +5093,15 @@
         // Achievement Badges
         const badges = [
             { icon: '🏆', text: 'Framework Architect' },
+            { icon: '🤖', text: 'AI/ML Engineer' },
+            { icon: '🧠', text: 'LLM & RAG Specialist' },
             { icon: '⚡', text: 'Performance Expert' },
             { icon: '🔧', text: 'CI/CD Master' },
             { icon: '📱', text: 'Mobile Testing Pro' },
-            { icon: '🌐', text: 'Cross-Platform Specialist' },
+            { icon: '🌐', text: 'Full Stack Developer' },
             { icon: '👨‍🏫', text: 'Team Mentor' },
             { icon: '🚀', text: 'Automation Leader' },
-            { icon: '💡', text: 'Innovation Driver' }
+            { icon: '💡', text: 'AI Agent Builder' }
         ];
 
         const badgesContainer = document.getElementById('badgesContainer');
@@ -3547,6 +5234,9 @@
         }
 
 
+        // Re-apply tilt to dynamically created elements
+        document.querySelectorAll('.stat-card, .impact-card, .project-card, .client-card').forEach(addTiltEffect);
+
         // Progress indicators for scroll position
         const progressBar = document.createElement('div');
         progressBar.style.cssText = `
@@ -3578,20 +5268,31 @@
         }
 
         // PDF Download function
+        function prepareForPrint() {
+            document.querySelectorAll('.card').forEach(c => c.classList.add('visible'));
+            document.querySelectorAll('.stat-card, .impact-card, .skill-category, .project-card, .cert-item, .testimonial-card, .badge, .timeline-item, .pyramid-level, .pyramid-stat, .skill-item, .tech-badge').forEach(el => {
+                el.style.setProperty('opacity', '1', 'important');
+                el.style.setProperty('transform', 'none', 'important');
+                el.style.setProperty('visibility', 'visible', 'important');
+                el.style.setProperty('animation', 'none', 'important');
+            });
+        }
+
+        window.addEventListener('beforeprint', prepareForPrint);
+
         window.downloadPDF = function() {
-            // Hide elements that shouldn't be in PDF
-            const elementsToHide = document.querySelectorAll('.download-btn, .scroll-top, canvas#spaceCanvas');
+            const elementsToHide = document.querySelectorAll('.download-btn, .scroll-top, canvas#spaceCanvas, .chat-toggle, .chat-widget');
             const originalDisplay = [];
             
             elementsToHide.forEach((el, index) => {
                 originalDisplay[index] = el.style.display;
                 el.style.display = 'none';
             });
+
+            prepareForPrint();
             
-            // Trigger print dialog
             window.print();
             
-            // Restore elements after a short delay
             setTimeout(() => {
                 elementsToHide.forEach((el, index) => {
                     el.style.display = originalDisplay[index];
@@ -3599,6 +5300,189 @@
             }, 1000);
         };
         
+        // ── AI Chatbot Widget Logic ──
+        const chatToggle = document.getElementById('chatToggle');
+        const chatWidget = document.getElementById('chatWidget');
+        const chatClose = document.getElementById('chatClose');
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        const chatSend = document.getElementById('chatSend');
+        const chatSuggestions = document.getElementById('chatSuggestions');
+
+        if (chatToggle && chatWidget) {
+            chatToggle.addEventListener('click', () => {
+                chatWidget.classList.toggle('open');
+                if (chatWidget.classList.contains('open')) {
+                    chatInput.focus();
+                    chatToggle.querySelector('.chat-badge').style.display = 'none';
+                }
+            });
+            chatClose.addEventListener('click', () => chatWidget.classList.remove('open'));
+        }
+
+        // CV knowledge base for the chatbot
+        const cvKnowledge = {
+            name: 'Luis Escobar',
+            title: 'Senior SDET & Full Stack Engineer | AI/ML Integration',
+            location: 'San Salvador, El Salvador',
+            experience: '10+ years',
+            companies: ['Ambient Prop Tech', 'Testlio Inc.', 'Correlation One', 'BairesDev', 'Intertec Intl', 'Proximity Software', 'Rulesware'],
+            aiSkills: ['OpenAI API', 'LLM Integration', 'AI Agents', 'RAG', 'Prompt Engineering', 'LangChain', 'LlamaIndex', 'Pinecone', 'pgvector', 'TensorFlow', 'PyTorch', 'NLP', 'Deep Learning', 'Computer Vision', 'MLOps', 'Fine-tuning', 'Chatbot Development'],
+            testingSkills: ['Playwright', 'Selenium', 'Appium', 'Cypress', 'REST Assured', 'JMeter', 'Postman', 'BrowserStack'],
+            languages: ['Java', 'Python', 'JavaScript', 'TypeScript', 'C#'],
+            devops: ['AWS', 'Docker', 'Kubernetes', 'Jenkins', 'GitHub Actions', 'GitLab CI/CD'],
+            databases: ['MySQL', 'MongoDB', 'SQL Server', 'Snowflake', 'Redis', 'Pinecone', 'pgvector'],
+            projects: [
+                'AI-Powered Test Generation Agent — Uses RAG + LangChain to auto-generate test cases from user stories',
+                'Enterprise RAG Chatbot Platform — LlamaIndex + OpenAI + pgvector for internal knowledge management',
+                'ML-Driven Flaky Test Detector — TensorFlow NLP pipeline that classifies flaky tests from CI logs',
+                'Hybrid Test Automation Framework — Java + Selenium + Appium with parallel execution and CI/CD',
+                'ETL Testing Pipeline — Snowflake + AWS Glue automated validation',
+                'Cross-Platform Mobile Testing — Appium for iOS and Android with BrowserStack'
+            ],
+            highlights: [
+                '70% reduction in manual testing time',
+                '5x faster release cycles',
+                '10+ AI/ML models deployed',
+                '95% test coverage achieved',
+                '5+ AI agents and RAG systems built',
+                '20+ engineers mentored'
+            ]
+        };
+
+        function buildSystemPrompt() {
+            return `You are Luis Escobar's AI assistant on his portfolio website. Answer questions about his professional background using ONLY the data below. Be concise, friendly, and specific. If asked something outside this data, say you can only discuss Luis's professional background.
+
+PROFILE: ${cvKnowledge.name}, ${cvKnowledge.title}, based in ${cvKnowledge.location}, ${cvKnowledge.experience} experience.
+
+COMPANIES: ${cvKnowledge.companies.join(', ')}
+
+AI/ML SKILLS: ${cvKnowledge.aiSkills.join(', ')}
+
+TESTING SKILLS: ${cvKnowledge.testingSkills.join(', ')}
+
+PROGRAMMING LANGUAGES: ${cvKnowledge.languages.join(', ')}
+
+DEVOPS: ${cvKnowledge.devops.join(', ')}
+
+DATABASES: ${cvKnowledge.databases.join(', ')}
+
+KEY PROJECTS:
+${cvKnowledge.projects.map(p => '- ' + p).join('\n')}
+
+KEY ACHIEVEMENTS:
+${cvKnowledge.highlights.map(h => '- ' + h).join('\n')}`;
+        }
+
+        let chatHistory = [{ role: 'system', content: buildSystemPrompt() }];
+
+        function addMessage(text, sender) {
+            const msg = document.createElement('div');
+            msg.className = 'chat-msg ' + sender;
+            msg.textContent = text;
+            chatMessages.appendChild(msg);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function addTypingIndicator() {
+            const msg = document.createElement('div');
+            msg.className = 'chat-msg bot typing';
+            msg.id = 'typingIndicator';
+            msg.innerHTML = '<div class="dot-typing"><span></span><span></span><span></span></div>';
+            chatMessages.appendChild(msg);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+            const el = document.getElementById('typingIndicator');
+            if (el) el.remove();
+        }
+
+        async function sendMessage(text) {
+            if (!text.trim()) return;
+            addMessage(text, 'user');
+            chatInput.value = '';
+            chatSuggestions.style.display = 'none';
+
+            chatHistory.push({ role: 'user', content: text });
+            addTypingIndicator();
+
+            try {
+                // Try OpenAI API if key is available
+                const apiKey = localStorage.getItem('luis_cv_openai_key');
+                if (apiKey) {
+                    const res = await fetch('https://api.openai.com/v1/chat/completions', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + apiKey },
+                        body: JSON.stringify({
+                            model: 'gpt-4o-mini',
+                            messages: chatHistory.slice(0, 10),
+                            max_tokens: 300,
+                            temperature: 0.5
+                        })
+                    });
+                    const data = await res.json();
+                    removeTypingIndicator();
+                    if (data.choices && data.choices[0]) {
+                        const reply = data.choices[0].message.content;
+                        chatHistory.push({ role: 'assistant', content: reply });
+                        addMessage(reply, 'bot');
+                    } else {
+                        addMessage('Sorry, I had trouble processing that. Try again!', 'bot');
+                    }
+                } else {
+                    // Fallback: local pattern-matching answers
+                    removeTypingIndicator();
+                    const reply = localAnswer(text);
+                    addMessage(reply, 'bot');
+                }
+            } catch (err) {
+                removeTypingIndicator();
+                const reply = localAnswer(text);
+                addMessage(reply, 'bot');
+            }
+        }
+
+        function localAnswer(q) {
+            const ql = q.toLowerCase();
+            if (ql.includes('ai') || ql.includes('ml') || ql.includes('machine learning') || ql.includes('llm') || ql.includes('rag')) {
+                return `Luis has deep experience in AI/ML: ${cvKnowledge.aiSkills.slice(0, 8).join(', ')}. Key projects include an AI-Powered Test Generation Agent using LangChain + RAG, an Enterprise RAG Chatbot with LlamaIndex + pgvector, and an ML-Driven Flaky Test Detector using TensorFlow. He's deployed 10+ AI/ML models and built 5+ AI agents.`;
+            }
+            if (ql.includes('project')) {
+                return 'Luis\'s key projects:\n' + cvKnowledge.projects.map(p => '• ' + p).join('\n');
+            }
+            if (ql.includes('company') || ql.includes('work') || ql.includes('experience')) {
+                return `Luis has ${cvKnowledge.experience} across: ${cvKnowledge.companies.join(', ')}. He's held roles from PEGA System Architect to Lead SDET, building test frameworks, AI agents, and full stack solutions.`;
+            }
+            if (ql.includes('test') || ql.includes('sdet') || ql.includes('automation') || ql.includes('selenium') || ql.includes('playwright')) {
+                return `Luis is an expert in test automation: ${cvKnowledge.testingSkills.join(', ')}. He's built hybrid frameworks with Java + Selenium + Appium, achieved 95% test coverage, and reduced manual testing time by 70%.`;
+            }
+            if (ql.includes('skill') || ql.includes('tech') || ql.includes('stack')) {
+                return `Languages: ${cvKnowledge.languages.join(', ')}\nAI/ML: ${cvKnowledge.aiSkills.slice(0, 6).join(', ')}\nTesting: ${cvKnowledge.testingSkills.slice(0, 5).join(', ')}\nDevOps: ${cvKnowledge.devops.slice(0, 4).join(', ')}\nDatabases: ${cvKnowledge.databases.slice(0, 5).join(', ')}`;
+            }
+            if (ql.includes('contact') || ql.includes('email') || ql.includes('hire')) {
+                return 'You can reach Luis at luisim1172@gmail.com or connect on LinkedIn: linkedin.com/in/luis-escobar-045b1516a';
+            }
+            if (ql.includes('achievement') || ql.includes('impact') || ql.includes('result')) {
+                return 'Key achievements:\n' + cvKnowledge.highlights.map(h => '• ' + h).join('\n');
+            }
+            return `Luis is a Senior SDET & Full Stack Engineer with ${cvKnowledge.experience} specializing in AI/ML integration, test automation, and scalable systems. Try asking about his AI projects, test frameworks, companies, or tech stack!`;
+        }
+
+        if (chatSend) {
+            chatSend.addEventListener('click', () => sendMessage(chatInput.value));
+        }
+        if (chatInput) {
+            chatInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') sendMessage(chatInput.value);
+            });
+        }
+        if (chatSuggestions) {
+            chatSuggestions.querySelectorAll('.chat-suggestion').forEach(btn => {
+                btn.addEventListener('click', () => sendMessage(btn.dataset.q));
+            });
+        }
+
         }); // End DOMContentLoaded
     </script>
 </body>
