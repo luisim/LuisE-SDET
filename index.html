@@ -346,19 +346,23 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
+            align-items: center;
             gap: 30px;
             color: var(--text-muted);
         }
 
-        .contact-info a {
+        .contact-info a,
+        .contact-info span {
             color: var(--text-muted);
             text-decoration: none;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 8px;
             transition: all 0.3s;
             padding: 8px 16px;
             border-radius: 20px;
+            line-height: 1.25;
+            vertical-align: middle;
         }
 
         .contact-info a:hover {
@@ -2219,7 +2223,8 @@
             /* Hide non-print elements */
             nav, .scroll-top, .download-btn, canvas#spaceCanvas, .mouse-glow,
             .mobile-nav-overlay, .site-footer, .code-header, .chat-widget,
-            .chat-toggle, #radar, #pipeline, #test-flow, #badges, #clients,
+            .chat-toggle, #radar, #pipeline, #test-flow, #badges, #clients, #agent-demo, #ml-metrics,
+            .code-run-bar, .code-output, .arch-toggle, .arch-diagram,
             .skills-search, .skill-category-filter, .hero, .mobile-menu-btn,
             .test-execution-controls, .execution-stats, .expand-btn,
             .copy-btn, .code-line-numbers {
@@ -3042,6 +3047,414 @@
             }
         }
 
+        /* ── RAG Pipeline Indicator ── */
+        .rag-pipeline {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 8px 12px;
+            margin: 4px 0;
+            background: rgba(17, 24, 39, 0.6);
+            border-radius: 10px;
+            font-size: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            overflow-x: auto;
+        }
+        .rag-step {
+            padding: 3px 8px;
+            border-radius: 6px;
+            background: rgba(55, 65, 81, 0.6);
+            color: var(--text-muted);
+            white-space: nowrap;
+            transition: all 0.4s;
+            opacity: 0.5;
+        }
+        .rag-step.active {
+            background: rgba(96, 165, 250, 0.25);
+            color: var(--primary);
+            opacity: 1;
+            box-shadow: 0 0 8px rgba(96, 165, 250, 0.3);
+        }
+        .rag-step.done {
+            background: rgba(34, 197, 94, 0.15);
+            color: #22c55e;
+            opacity: 1;
+        }
+        .rag-arrow { color: var(--text-muted); font-size: 9px; opacity: 0.4; }
+        .rag-sources {
+            font-size: 10px;
+            color: var(--text-muted);
+            padding: 6px 10px;
+            margin-top: 4px;
+            border-left: 2px solid rgba(96, 165, 250, 0.3);
+            background: rgba(96, 165, 250, 0.05);
+            border-radius: 0 6px 6px 0;
+        }
+        .rag-sources strong { color: var(--primary); }
+
+        /* ── AI Agent Demo ── */
+        .agent-demo-container {
+            position: relative;
+        }
+        .agent-scenario-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .agent-scenario-btn {
+            padding: 8px 16px;
+            background: rgba(55, 65, 81, 0.5);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 10px;
+            color: var(--text-secondary);
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+        .agent-scenario-btn.active, .agent-scenario-btn:hover {
+            background: rgba(96, 165, 250, 0.15);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        .agent-run-btn {
+            padding: 10px 24px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+        .agent-run-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(96, 165, 250, 0.4); }
+        .agent-run-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .agent-timeline {
+            position: relative;
+            padding-left: 32px;
+        }
+        .agent-timeline::before {
+            content: '';
+            position: absolute;
+            left: 11px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: rgba(99, 102, 241, 0.15);
+        }
+        .agent-step {
+            position: relative;
+            margin-bottom: 16px;
+            opacity: 0.3;
+            transition: all 0.5s;
+        }
+        .agent-step.active { opacity: 1; }
+        .agent-step.done { opacity: 0.85; }
+        .agent-step-dot {
+            position: absolute;
+            left: -28px;
+            top: 6px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: rgba(55, 65, 81, 0.8);
+            border: 2px solid rgba(99, 102, 241, 0.3);
+            transition: all 0.4s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8px;
+        }
+        .agent-step.active .agent-step-dot {
+            background: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 0 12px rgba(96, 165, 250, 0.5);
+        }
+        .agent-step.done .agent-step-dot {
+            background: #22c55e;
+            border-color: #22c55e;
+        }
+        .agent-step-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+        .agent-step-content {
+            padding: 12px 16px;
+            background: rgba(55, 65, 81, 0.3);
+            border: 1px solid rgba(99, 102, 241, 0.15);
+            border-radius: 10px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-family: 'JetBrains Mono', monospace;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+        .agent-step.active .agent-step-content {
+            border-color: rgba(96, 165, 250, 0.3);
+            background: rgba(96, 165, 250, 0.05);
+        }
+        .agent-concept-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            background: rgba(167, 139, 250, 0.15);
+            color: var(--secondary);
+            border-radius: 6px;
+            font-size: 10px;
+            margin-left: 8px;
+            font-family: inherit;
+        }
+
+        /* ── Code Playground ── */
+        .code-run-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 16px;
+            background: rgba(17, 24, 39, 0.5);
+            border: 1px solid rgba(99, 102, 241, 0.15);
+            border-radius: 10px;
+            margin-top: 12px;
+        }
+        .code-run-btn {
+            padding: 8px 20px;
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+        .code-run-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4); }
+        .code-run-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .code-run-status {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .code-output {
+            margin-top: 12px;
+            background: rgba(17, 24, 39, 0.8);
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            display: none;
+        }
+        .code-output.visible { display: block; }
+        .code-output-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            background: rgba(34, 197, 94, 0.1);
+            border-bottom: 1px solid rgba(34, 197, 94, 0.15);
+            font-size: 11px;
+            color: #22c55e;
+            font-weight: 600;
+        }
+        .code-output-body {
+            padding: 14px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            max-height: 350px;
+            overflow-y: auto;
+        }
+        .code-output-body .out-step {
+            padding: 3px 0;
+            opacity: 0;
+            animation: fadeInLine 0.3s ease forwards;
+        }
+        .code-output-body .out-dim { color: var(--text-muted); }
+        .code-output-body .out-success { color: #22c55e; }
+        .code-output-body .out-info { color: var(--primary); }
+        .code-output-body .out-warn { color: #eab308; }
+        .code-output-body .out-data { color: var(--secondary); }
+        @keyframes fadeInLine { to { opacity: 1; } }
+
+        /* ── ML Metrics Dashboard ── */
+        .ml-dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .ml-panel {
+            background: rgba(55, 65, 81, 0.3);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 14px;
+            padding: 20px;
+        }
+        .ml-panel-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .ml-model-toggle {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+        .ml-model-btn {
+            padding: 5px 12px;
+            background: rgba(55, 65, 81, 0.5);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+        .ml-model-btn.active {
+            background: rgba(96, 165, 250, 0.2);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        .ml-metric-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(99, 102, 241, 0.08);
+        }
+        .ml-metric-label {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+        .ml-metric-value {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .ml-metric-bar {
+            width: 80px;
+            height: 6px;
+            background: rgba(55, 65, 81, 0.6);
+            border-radius: 3px;
+            margin-left: 10px;
+            overflow: hidden;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .ml-metric-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.6s ease;
+        }
+        .confusion-grid {
+            display: grid;
+            grid-template-columns: auto repeat(2, 1fr);
+            grid-template-rows: auto repeat(2, 1fr);
+            gap: 3px;
+            font-size: 11px;
+            text-align: center;
+            margin-top: 10px;
+        }
+        .confusion-cell {
+            padding: 12px 8px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+            transition: all 0.4s;
+        }
+        .confusion-header {
+            color: var(--text-muted);
+            font-size: 10px;
+            padding: 6px;
+            font-weight: 600;
+        }
+        .confusion-corner { }
+        @media (max-width: 768px) {
+            .ml-dashboard { grid-template-columns: 1fr; }
+        }
+
+        /* ── Architecture Diagrams ── */
+        .arch-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            margin-top: 12px;
+            background: rgba(96, 165, 250, 0.1);
+            border: 1px solid rgba(96, 165, 250, 0.25);
+            border-radius: 8px;
+            color: var(--primary);
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+        .arch-toggle:hover {
+            background: rgba(96, 165, 250, 0.2);
+            border-color: var(--primary);
+        }
+        .arch-diagram {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.5s ease, opacity 0.4s ease;
+            opacity: 0;
+            padding: 0 16px;
+        }
+        .arch-diagram.open {
+            max-height: 400px;
+            opacity: 1;
+            padding: 16px;
+        }
+        .arch-flow {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .arch-node {
+            padding: 10px 16px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 600;
+            text-align: center;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            background: rgba(55, 65, 81, 0.5);
+            color: var(--text-primary);
+            min-width: 70px;
+            transition: all 0.3s;
+        }
+        .arch-node:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(96, 165, 250, 0.2);
+        }
+        .arch-node.highlight {
+            background: rgba(96, 165, 250, 0.15);
+            border-color: var(--primary);
+        }
+        .arch-node .arch-icon { font-size: 18px; display: block; margin-bottom: 4px; }
+        .arch-node .arch-sub {
+            font-size: 9px;
+            color: var(--text-muted);
+            font-weight: 400;
+            margin-top: 2px;
+        }
+        .arch-arrow {
+            color: var(--primary);
+            font-size: 16px;
+            opacity: 0.6;
+        }
+
         /* ── Live Demo Pulse Badge ── */
         .live-badge {
             display: inline-flex;
@@ -3294,6 +3707,34 @@
             <div class="impact-grid" id="impactGrid"></div>
         </div>
 
+        <!-- ML Metrics Dashboard -->
+        <div class="card" id="ml-metrics">
+            <h2>ML Model Performance Dashboard</h2>
+            <div class="ml-model-toggle" id="mlModelToggle">
+                <button class="ml-model-btn active" data-model="gpt4o">GPT-4o</button>
+                <button class="ml-model-btn" data-model="gpt4omini">GPT-4o-mini</button>
+                <button class="ml-model-btn" data-model="finetuned">Fine-tuned (Custom)</button>
+            </div>
+            <div class="ml-dashboard" id="mlDashboard">
+                <div class="ml-panel" id="mlMetricsPanel">
+                    <div class="ml-panel-title">📊 Model Metrics</div>
+                    <div id="mlMetricsRows"></div>
+                </div>
+                <div class="ml-panel" id="mlConfusionPanel">
+                    <div class="ml-panel-title">🎯 Confusion Matrix</div>
+                    <div class="confusion-grid" id="confusionGrid"></div>
+                </div>
+                <div class="ml-panel" id="mlCostPanel">
+                    <div class="ml-panel-title">💰 Cost & Latency</div>
+                    <div id="mlCostRows"></div>
+                </div>
+                <div class="ml-panel" id="mlComparisonPanel">
+                    <div class="ml-panel-title">⚡ Production Signals</div>
+                    <div id="mlProdRows"></div>
+                </div>
+            </div>
+        </div>
+
         <!-- Test Automation Pyramid -->
         <div class="card" id="pyramid">
             <h2>Test Automation Strategy</h2>
@@ -3312,6 +3753,23 @@
         <div class="card" id="pipeline">
             <h2>CI/CD & MLOps Pipeline</h2>
             <div class="pipeline-container" id="pipelineContainer"></div>
+        </div>
+
+        <!-- Live AI Agent Demo -->
+        <div class="card" id="agent-demo">
+            <h2>Live AI Agent Demo</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 20px; text-align: center;">
+                Watch an AI agent reason through a task step-by-step using the ReAct pattern
+            </p>
+            <div class="agent-demo-container">
+                <div class="agent-scenario-bar">
+                    <button class="agent-scenario-btn active" data-scenario="test-failure">Analyze Test Failure</button>
+                    <button class="agent-scenario-btn" data-scenario="gen-tests">Generate Test Cases</button>
+                    <button class="agent-scenario-btn" data-scenario="rag-query">RAG Knowledge Query</button>
+                    <button class="agent-run-btn" id="agentRunBtn">▶ Run Agent</button>
+                </div>
+                <div class="agent-timeline" id="agentTimeline"></div>
+            </div>
         </div>
 
         <!-- Interactive Test Execution Flow -->
@@ -3517,6 +3975,14 @@
             <span class="string">"sources"</span>: [doc.metadata <span class="keyword">for</span> doc <span class="keyword">in</span> result.get(<span class="string">"source_documents"</span>, [])],
         }</pre>
             </div>
+            <div class="code-run-bar">
+                <button class="code-run-btn" id="codeRunBtn">▶ Run</button>
+                <span class="code-run-status" id="codeRunStatus"></span>
+            </div>
+            <div class="code-output" id="codeOutput">
+                <div class="code-output-header">⬤ Output — rag_agent.py</div>
+                <div class="code-output-body" id="codeOutputBody"></div>
+            </div>
         </div>
 
         <!-- Certifications -->
@@ -3571,7 +4037,7 @@
             <button class="chat-close" id="chatClose">&times;</button>
         </div>
         <div class="chat-messages" id="chatMessages">
-            <div class="chat-msg bot">Hi! I'm Luis's AI assistant. Ask me anything about his experience, skills, projects, or tech stack.</div>
+            <div class="chat-msg bot">Hi! I'm Luis's AI assistant powered by RAG. Ask me anything about his experience, skills, projects, or tech stack.</div>
         </div>
         <div class="chat-suggestions" id="chatSuggestions">
             <button class="chat-suggestion" data-q="What AI projects has Luis built?">AI projects</button>
@@ -5300,7 +5766,9 @@
             }, 1000);
         };
         
-        // ── AI Chatbot Widget Logic ──
+        // ══════════════════════════════════════════════════════════
+        // 1. RAG-POWERED CHATBOT WITH PIPELINE INDICATOR
+        // ══════════════════════════════════════════════════════════
         const chatToggle = document.getElementById('chatToggle');
         const chatWidget = document.getElementById('chatWidget');
         const chatClose = document.getElementById('chatClose');
@@ -5308,7 +5776,6 @@
         const chatInput = document.getElementById('chatInput');
         const chatSend = document.getElementById('chatSend');
         const chatSuggestions = document.getElementById('chatSuggestions');
-
         if (chatToggle && chatWidget) {
             chatToggle.addEventListener('click', () => {
                 chatWidget.classList.toggle('open');
@@ -5320,66 +5787,110 @@
             chatClose.addEventListener('click', () => chatWidget.classList.remove('open'));
         }
 
-        // CV knowledge base for the chatbot
-        const cvKnowledge = {
-            name: 'Luis Escobar',
-            title: 'Senior SDET & Full Stack Engineer | AI/ML Integration',
-            location: 'San Salvador, El Salvador',
-            experience: '10+ years',
-            companies: ['Ambient Prop Tech', 'Testlio Inc.', 'Correlation One', 'BairesDev', 'Intertec Intl', 'Proximity Software', 'Rulesware'],
-            aiSkills: ['OpenAI API', 'LLM Integration', 'AI Agents', 'RAG', 'Prompt Engineering', 'LangChain', 'LlamaIndex', 'Pinecone', 'pgvector', 'TensorFlow', 'PyTorch', 'NLP', 'Deep Learning', 'Computer Vision', 'MLOps', 'Fine-tuning', 'Chatbot Development'],
-            testingSkills: ['Playwright', 'Selenium', 'Appium', 'Cypress', 'REST Assured', 'JMeter', 'Postman', 'BrowserStack'],
-            languages: ['Java', 'Python', 'JavaScript', 'TypeScript', 'C#'],
-            devops: ['AWS', 'Docker', 'Kubernetes', 'Jenkins', 'GitHub Actions', 'GitLab CI/CD'],
-            databases: ['MySQL', 'MongoDB', 'SQL Server', 'Snowflake', 'Redis', 'Pinecone', 'pgvector'],
-            projects: [
-                'AI-Powered Test Generation Agent — Uses RAG + LangChain to auto-generate test cases from user stories',
-                'Enterprise RAG Chatbot Platform — LlamaIndex + OpenAI + pgvector for internal knowledge management',
-                'ML-Driven Flaky Test Detector — TensorFlow NLP pipeline that classifies flaky tests from CI logs',
-                'Hybrid Test Automation Framework — Java + Selenium + Appium with parallel execution and CI/CD',
-                'ETL Testing Pipeline — Snowflake + AWS Glue automated validation',
-                'Cross-Platform Mobile Testing — Appium for iOS and Android with BrowserStack'
-            ],
-            highlights: [
-                '70% reduction in manual testing time',
-                '5x faster release cycles',
-                '10+ AI/ML models deployed',
-                '95% test coverage achieved',
-                '5+ AI agents and RAG systems built',
-                '20+ engineers mentored'
-            ]
-        };
+        // CV knowledge chunks for RAG retrieval
+        const ragChunks = [
+            { id: 'profile', section: 'Profile', text: 'Luis Escobar is a Senior SDET & Full Stack Engineer with AI/ML Integration expertise. Based in San Salvador, El Salvador. 10+ years of experience. Contact: luisim1172@gmail.com, +503 7080-2431. LinkedIn: linkedin.com/in/luis-escobar-045b1516a' },
+            { id: 'ai-skills', section: 'AI/ML Skills', text: 'AI and Machine Learning skills: OpenAI API (90%), LLM Integration (88%), AI Agents (85%), RAG Retrieval-Augmented Generation (87%), Prompt Engineering (92%), LangChain and LlamaIndex (85%), Fine-tuning (80%), NLP Natural Language Processing (82%). ML Frameworks: TensorFlow (85%), PyTorch (82%), Computer Vision (78%), Deep Learning (85%), MLOps (88%), Chatbot and AI Assistant Development (85%).' },
+            { id: 'testing-skills', section: 'Testing Skills', text: 'Test automation expertise: Playwright, Selenium, Appium, Cypress, REST Assured, JMeter, Postman, BrowserStack. Built hybrid frameworks with Java + Selenium + Appium. Achieved 95% test coverage and 70% reduction in manual testing time.' },
+            { id: 'languages', section: 'Programming', text: 'Programming languages: Java, Python, JavaScript, TypeScript, C#. Databases: MySQL, MongoDB, SQL Server, Snowflake, Redis, Pinecone (vector DB), pgvector. DevOps: AWS, Docker, Kubernetes, Jenkins, GitHub Actions, GitLab CI/CD.' },
+            { id: 'project-ai-agent', section: 'Projects', text: 'AI-Powered Test Generation Agent: Uses RAG + LangChain to auto-generate test cases from user stories. Integrates with Pinecone vector database for semantic search over test documentation. Deployed in production with CI/CD pipeline.' },
+            { id: 'project-rag-chatbot', section: 'Projects', text: 'Enterprise RAG Chatbot Platform: Built with LlamaIndex + OpenAI + pgvector for internal knowledge management. Handles document ingestion, chunking, embedding, and semantic retrieval. Serves 500+ internal users.' },
+            { id: 'project-flaky-detector', section: 'Projects', text: 'ML-Driven Flaky Test Detector: TensorFlow NLP pipeline that classifies flaky tests from CI logs. Uses deep learning for pattern recognition in test failure logs. Reduced false positives by 60%.' },
+            { id: 'project-hybrid', section: 'Projects', text: 'Hybrid Test Automation Framework: Java + Selenium + Appium with parallel execution across Chrome, Firefox, Edge. Integrated with Jenkins CI/CD, BrowserStack for cross-browser testing, and custom reporting.' },
+            { id: 'project-etl', section: 'Projects', text: 'ETL Testing Pipeline: Snowflake + AWS Glue automated data validation. End-to-end testing of data transformations and loading processes.' },
+            { id: 'project-mobile', section: 'Projects', text: 'Cross-Platform Mobile Testing: Appium for iOS and Android with BrowserStack cloud infrastructure. Page Object Model pattern with parallel execution.' },
+            { id: 'companies', section: 'Experience', text: 'Companies worked at: Ambient Prop Tech (Lead SDET), Testlio Inc. (Senior SDET), Correlation One (SDET), BairesDev (Senior QA), Intertec Intl (QA Engineer), Proximity Software, Rulesware (PEGA System Architect). Roles span test automation leadership, AI integration, full stack development.' },
+            { id: 'achievements', section: 'Achievements', text: 'Key achievements: 70% reduction in manual testing time, 5x faster release cycles, 10+ AI/ML models deployed in production, 95% test coverage achieved, 5+ AI agents and RAG systems built, 20+ engineers mentored across multiple teams.' },
+            { id: 'education', section: 'Education', text: 'Bachelor\'s Degree in Computer Systems Engineering from Universidad Evangelica de El Salvador (2015-2022).' },
+            { id: 'certifications', section: 'Certifications', text: 'Certifications include: ISTQB Foundation (ISTQB), AWS Cloud Practitioner (Amazon), Selenium WebDriver with Java (Udemy), Appium Mobile Testing (Udemy), Docker & Kubernetes (Udemy), JavaScript Advanced Concepts (Udemy), Machine Learning Specialization (Coursera/Stanford), LangChain for LLM Application Development (DeepLearning.AI).' }
+        ];
 
-        function buildSystemPrompt() {
-            return `You are Luis Escobar's AI assistant on his portfolio website. Answer questions about his professional background using ONLY the data below. Be concise, friendly, and specific. If asked something outside this data, say you can only discuss Luis's professional background.
-
-PROFILE: ${cvKnowledge.name}, ${cvKnowledge.title}, based in ${cvKnowledge.location}, ${cvKnowledge.experience} experience.
-
-COMPANIES: ${cvKnowledge.companies.join(', ')}
-
-AI/ML SKILLS: ${cvKnowledge.aiSkills.join(', ')}
-
-TESTING SKILLS: ${cvKnowledge.testingSkills.join(', ')}
-
-PROGRAMMING LANGUAGES: ${cvKnowledge.languages.join(', ')}
-
-DEVOPS: ${cvKnowledge.devops.join(', ')}
-
-DATABASES: ${cvKnowledge.databases.join(', ')}
-
-KEY PROJECTS:
-${cvKnowledge.projects.map(p => '- ' + p).join('\n')}
-
-KEY ACHIEVEMENTS:
-${cvKnowledge.highlights.map(h => '- ' + h).join('\n')}`;
+        // Simple TF-IDF-like scoring for client-side semantic search
+        function tokenize(text) {
+            return text.toLowerCase().replace(/[^a-z0-9\s]/g, '').split(/\s+/).filter(w => w.length > 2);
         }
 
-        let chatHistory = [{ role: 'system', content: buildSystemPrompt() }];
+        const stopWords = new Set(['the','and','for','with','that','this','from','are','was','has','have','been','will','can','but','not','all','about','his','its']);
 
-        function addMessage(text, sender) {
+        function ragSearch(query, topK = 3) {
+            const qTokens = tokenize(query).filter(t => !stopWords.has(t));
+            const scored = ragChunks.map(chunk => {
+                const cTokens = tokenize(chunk.text);
+                const cSet = new Set(cTokens);
+                let score = 0;
+                for (const qt of qTokens) {
+                    if (cSet.has(qt)) score += 2;
+                    for (const ct of cSet) {
+                        if (ct.includes(qt) || qt.includes(ct)) score += 1;
+                    }
+                }
+                const queryBigrams = [];
+                for (let i = 0; i < qTokens.length - 1; i++) queryBigrams.push(qTokens[i] + ' ' + qTokens[i+1]);
+                const chunkLower = chunk.text.toLowerCase();
+                for (const bg of queryBigrams) {
+                    if (chunkLower.includes(bg)) score += 3;
+                }
+                return { ...chunk, score };
+            });
+            return scored.sort((a, b) => b.score - a.score).slice(0, topK).filter(c => c.score > 0);
+        }
+
+        function createRagPipeline() {
+            const pipelineEl = document.createElement('div');
+            pipelineEl.className = 'rag-pipeline';
+            pipelineEl.style.display = 'flex';
+            const stepsData = ['query', 'embed', 'search', 'context', 'llm'];
+            const labels = { query: 'Query', embed: 'Embed', search: 'Vector Search', context: 'Context', llm: 'LLM' };
+            stepsData.forEach((s, i) => {
+                if (i > 0) {
+                    const arrow = document.createElement('span');
+                    arrow.className = 'rag-arrow';
+                    arrow.textContent = '→';
+                    pipelineEl.appendChild(arrow);
+                }
+                const step = document.createElement('span');
+                step.className = 'rag-step';
+                step.dataset.step = s;
+                step.textContent = labels[s];
+                pipelineEl.appendChild(step);
+            });
+            chatMessages.appendChild(pipelineEl);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            return pipelineEl;
+        }
+
+        async function animateRagPipeline(pipelineEl) {
+            const steps = ['query', 'embed', 'search', 'context', 'llm'];
+            const allSteps = pipelineEl.querySelectorAll('.rag-step');
+            for (const stepName of steps) {
+                const el = pipelineEl.querySelector(`[data-step="${stepName}"]`);
+                if (el) {
+                    allSteps.forEach(s => { if (s.classList.contains('active')) { s.classList.remove('active'); s.classList.add('done'); } });
+                    el.classList.add('active');
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                    await new Promise(r => setTimeout(r, 450));
+                }
+            }
+            allSteps.forEach(s => { s.classList.remove('active'); s.classList.add('done'); });
+        }
+
+        function buildContextFromChunks(chunks) {
+            return chunks.map(c => `[${c.section}]: ${c.text}`).join('\n\n');
+        }
+
+        function buildSystemPrompt(context) {
+            return `You are Luis Escobar's AI assistant on his portfolio. Answer using ONLY the retrieved context below. Be concise, friendly, and cite sections. If the context doesn't cover the question, say so.
+
+RETRIEVED CONTEXT:
+${context}`;
+        }
+
+        let chatHistory = [];
+
+        function addMessage(content, sender, isHTML) {
             const msg = document.createElement('div');
             msg.className = 'chat-msg ' + sender;
-            msg.textContent = text;
+            if (isHTML) msg.innerHTML = content; else msg.textContent = content;
             chatMessages.appendChild(msg);
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
@@ -5402,86 +5913,382 @@ ${cvKnowledge.highlights.map(h => '- ' + h).join('\n')}`;
             if (!text.trim()) return;
             addMessage(text, 'user');
             chatInput.value = '';
-            chatSuggestions.style.display = 'none';
+            if (chatSuggestions) chatSuggestions.style.display = 'none';
 
-            chatHistory.push({ role: 'user', content: text });
+            const pipelineEl = createRagPipeline();
+            await animateRagPipeline(pipelineEl);
+
             addTypingIndicator();
 
+            const retrieved = ragSearch(text);
+            const context = buildContextFromChunks(retrieved.length > 0 ? retrieved : ragChunks.slice(0, 3));
+
             try {
-                // Try OpenAI API if key is available
                 const apiKey = localStorage.getItem('luis_cv_openai_key');
                 if (apiKey) {
+                    const messages = [
+                        { role: 'system', content: buildSystemPrompt(context) },
+                        ...chatHistory.slice(-6),
+                        { role: 'user', content: text }
+                    ];
                     const res = await fetch('https://api.openai.com/v1/chat/completions', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + apiKey },
-                        body: JSON.stringify({
-                            model: 'gpt-4o-mini',
-                            messages: chatHistory.slice(0, 10),
-                            max_tokens: 300,
-                            temperature: 0.5
-                        })
+                        body: JSON.stringify({ model: 'gpt-4o-mini', messages, max_tokens: 300, temperature: 0.4 })
                     });
                     const data = await res.json();
                     removeTypingIndicator();
                     if (data.choices && data.choices[0]) {
                         const reply = data.choices[0].message.content;
-                        chatHistory.push({ role: 'assistant', content: reply });
+                        chatHistory.push({ role: 'user', content: text }, { role: 'assistant', content: reply });
                         addMessage(reply, 'bot');
-                    } else {
-                        addMessage('Sorry, I had trouble processing that. Try again!', 'bot');
+                        if (retrieved.length > 0) {
+                            addMessage(`<div class="rag-sources"><strong>Sources:</strong> ${retrieved.map(r => r.section).join(', ')}</div>`, 'bot', true);
+                        }
+                        return;
                     }
-                } else {
-                    // Fallback: local pattern-matching answers
-                    removeTypingIndicator();
-                    const reply = localAnswer(text);
-                    addMessage(reply, 'bot');
                 }
-            } catch (err) {
+                throw new Error('fallback');
+            } catch {
                 removeTypingIndicator();
-                const reply = localAnswer(text);
+                const reply = ragLocalAnswer(text, retrieved, context);
                 addMessage(reply, 'bot');
+                if (retrieved.length > 0) {
+                    addMessage(`<div class="rag-sources"><strong>Retrieved from:</strong> ${retrieved.map(r => r.section).join(', ')}</div>`, 'bot', true);
+                }
             }
         }
 
-        function localAnswer(q) {
-            const ql = q.toLowerCase();
-            if (ql.includes('ai') || ql.includes('ml') || ql.includes('machine learning') || ql.includes('llm') || ql.includes('rag')) {
-                return `Luis has deep experience in AI/ML: ${cvKnowledge.aiSkills.slice(0, 8).join(', ')}. Key projects include an AI-Powered Test Generation Agent using LangChain + RAG, an Enterprise RAG Chatbot with LlamaIndex + pgvector, and an ML-Driven Flaky Test Detector using TensorFlow. He's deployed 10+ AI/ML models and built 5+ AI agents.`;
+        function ragLocalAnswer(q, retrieved, context) {
+            if (retrieved.length === 0) {
+                return 'Luis is a Senior SDET & Full Stack Engineer with 10+ years specializing in AI/ML integration, test automation, and scalable systems. Try asking about his AI projects, skills, or experience!';
             }
-            if (ql.includes('project')) {
-                return 'Luis\'s key projects:\n' + cvKnowledge.projects.map(p => '• ' + p).join('\n');
-            }
-            if (ql.includes('company') || ql.includes('work') || ql.includes('experience')) {
-                return `Luis has ${cvKnowledge.experience} across: ${cvKnowledge.companies.join(', ')}. He's held roles from PEGA System Architect to Lead SDET, building test frameworks, AI agents, and full stack solutions.`;
-            }
-            if (ql.includes('test') || ql.includes('sdet') || ql.includes('automation') || ql.includes('selenium') || ql.includes('playwright')) {
-                return `Luis is an expert in test automation: ${cvKnowledge.testingSkills.join(', ')}. He's built hybrid frameworks with Java + Selenium + Appium, achieved 95% test coverage, and reduced manual testing time by 70%.`;
-            }
-            if (ql.includes('skill') || ql.includes('tech') || ql.includes('stack')) {
-                return `Languages: ${cvKnowledge.languages.join(', ')}\nAI/ML: ${cvKnowledge.aiSkills.slice(0, 6).join(', ')}\nTesting: ${cvKnowledge.testingSkills.slice(0, 5).join(', ')}\nDevOps: ${cvKnowledge.devops.slice(0, 4).join(', ')}\nDatabases: ${cvKnowledge.databases.slice(0, 5).join(', ')}`;
-            }
-            if (ql.includes('contact') || ql.includes('email') || ql.includes('hire')) {
-                return 'You can reach Luis at luisim1172@gmail.com or connect on LinkedIn: linkedin.com/in/luis-escobar-045b1516a';
-            }
-            if (ql.includes('achievement') || ql.includes('impact') || ql.includes('result')) {
-                return 'Key achievements:\n' + cvKnowledge.highlights.map(h => '• ' + h).join('\n');
-            }
-            return `Luis is a Senior SDET & Full Stack Engineer with ${cvKnowledge.experience} specializing in AI/ML integration, test automation, and scalable systems. Try asking about his AI projects, test frameworks, companies, or tech stack!`;
+            const topChunk = retrieved[0];
+            const maxLen = 280;
+            let answer = topChunk.text;
+            if (answer.length > maxLen) answer = answer.substring(0, maxLen).replace(/\s\S*$/, '') + '...';
+            return answer;
         }
 
-        if (chatSend) {
-            chatSend.addEventListener('click', () => sendMessage(chatInput.value));
-        }
-        if (chatInput) {
-            chatInput.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') sendMessage(chatInput.value);
+        if (chatSend) chatSend.addEventListener('click', () => sendMessage(chatInput.value));
+        if (chatInput) chatInput.addEventListener('keydown', e => { if (e.key === 'Enter') sendMessage(chatInput.value); });
+        if (chatSuggestions) chatSuggestions.querySelectorAll('.chat-suggestion').forEach(btn => {
+            btn.addEventListener('click', () => sendMessage(btn.dataset.q));
+        });
+
+        // ══════════════════════════════════════════════════════════
+        // 2. LIVE AI AGENT DEMO
+        // ══════════════════════════════════════════════════════════
+        const agentScenarios = {
+            'test-failure': {
+                title: 'Analyze Test Failure',
+                steps: [
+                    { label: 'User Input', concept: 'Prompt', content: '> "LoginTest.testOAuthFlow failed in CI build #4521 — timeout after 30s on redirect callback"' },
+                    { label: 'Thought (ReAct)', concept: 'Chain-of-Thought', content: 'The test failed due to a timeout on OAuth redirect. I should:\n1. Search test docs for OAuth flow requirements\n2. Check if this is a known flaky pattern\n3. Analyze recent CI logs for similar failures' },
+                    { label: 'Action: search_test_docs', concept: 'Tool Calling', content: 'tool_call: search_test_docs(\n  query="OAuth redirect callback timeout"\n)\n→ Searching Pinecone index... 3 docs retrieved (similarity: 0.92, 0.87, 0.81)' },
+                    { label: 'Observation', concept: 'RAG Retrieval', content: 'Retrieved context:\n• OAuth redirects require 45s timeout (not 30s) per runbook v2.3\n• Known issue: staging OAuth provider has 10-15s latency spike at peak hours\n• Similar failure in build #4489 — resolved by increasing timeout' },
+                    { label: 'Action: classify_failure', concept: 'NLP Classification', content: 'tool_call: classify_failure(\n  log="timeout after 30s on redirect callback",\n  context=retrieved_docs\n)\n→ Classification: ENVIRONMENT_FLAKY (confidence: 0.94)' },
+                    { label: 'Final Response', concept: 'Agent Output', content: '✅ Root Cause: Environment-related flaky test (94% confidence)\n\nRecommendation:\n1. Increase OAuth timeout to 45s (per runbook v2.3)\n2. Add retry with exponential backoff for OAuth redirects\n3. Tag test as environment-sensitive in CI config\n\nSources: runbook-v2.3, build-4489-postmortem' }
+                ]
+            },
+            'gen-tests': {
+                title: 'Generate Test Cases',
+                steps: [
+                    { label: 'User Input', concept: 'Prompt', content: '> "Generate test cases for: As a user, I want to reset my password via email so I can regain access to my account"' },
+                    { label: 'Thought (ReAct)', concept: 'Chain-of-Thought', content: 'I need to:\n1. Search existing test patterns for password reset flows\n2. Identify edge cases from security requirements\n3. Generate comprehensive test cases covering happy path and failures' },
+                    { label: 'Action: search_test_docs', concept: 'Tool Calling', content: 'tool_call: search_test_docs(\n  query="password reset email flow test patterns"\n)\n→ Searching vector store... 4 docs retrieved (similarity: 0.95, 0.89, 0.85, 0.82)' },
+                    { label: 'Observation', concept: 'RAG Retrieval', content: 'Retrieved patterns:\n• Reset tokens must expire in 15 min (security policy)\n• Rate limit: max 3 reset requests per hour\n• Email must be sent within 30s SLA\n• Token must be single-use' },
+                    { label: 'Action: generate_test_plan', concept: 'Structured Output', content: 'tool_call: generate_test_plan(\n  user_story=...,\n  context=retrieved_docs,\n  coverage_targets=["happy_path", "security", "edge_cases"]\n)' },
+                    { label: 'Final Response', concept: 'Agent Output', content: '✅ Generated 8 test cases:\n\n1. ✓ Happy path: valid email → receive reset link → new password\n2. ✓ Invalid email format → show validation error\n3. ✓ Unregistered email → show generic message (no enumeration)\n4. ✓ Expired token (>15min) → show expiration error\n5. ✓ Reused token → reject with "already used" message\n6. ✓ Rate limit: 4th request in 1hr → throttle response\n7. ✓ Password complexity validation on new password\n8. ✓ Email delivery SLA < 30s\n\nCoverage: security ✓, happy path ✓, edge cases ✓' }
+                ]
+            },
+            'rag-query': {
+                title: 'RAG Knowledge Query',
+                steps: [
+                    { label: 'User Input', concept: 'Prompt', content: '> "What\'s our standard approach for testing microservice APIs with contract testing?"' },
+                    { label: 'Thought (ReAct)', concept: 'Chain-of-Thought', content: 'This is a knowledge retrieval question. I should:\n1. Search the test documentation knowledge base\n2. Find contract testing standards and patterns\n3. Compile a comprehensive answer with sources' },
+                    { label: 'Action: embed_query', concept: 'Embedding', content: 'Generating embedding vector...\nModel: text-embedding-3-large (3072 dimensions)\nQuery tokens: 12 → Vector: [0.0234, -0.0891, 0.1247, ...]' },
+                    { label: 'Action: vector_search', concept: 'Vector DB (Pinecone)', content: 'Pinecone.query(\n  vector=query_embedding,\n  top_k=5,\n  filter={"category": "api-testing"}\n)\n→ 5 results retrieved in 23ms\n→ Top match: "contract-testing-guide.md" (score: 0.96)' },
+                    { label: 'Context Assembly', concept: 'RAG Pipeline', content: 'Assembling context window:\n• contract-testing-guide.md (chunks 2, 5, 8)\n• pact-integration-runbook.md (chunk 1)\n• api-testing-standards.md (chunk 3)\nTotal tokens: 1,847 / 4,096 context limit' },
+                    { label: 'Final Response', concept: 'LLM Generation', content: '✅ Contract Testing Standard:\n\nWe use Pact for consumer-driven contract testing:\n1. Consumer defines expected interactions\n2. Provider verifies contracts in CI pipeline\n3. Pact Broker manages contract versions\n\nKey patterns:\n• Schema validation with JSON Schema\n• Backward compatibility checks on every PR\n• Contract tests run before integration tests\n\n📄 Sources: contract-testing-guide.md, pact-integration-runbook.md' }
+                ]
+            }
+        };
+
+        let activeScenario = 'test-failure';
+        let agentRunning = false;
+
+        document.querySelectorAll('.agent-scenario-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (agentRunning) return;
+                document.querySelectorAll('.agent-scenario-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                activeScenario = btn.dataset.scenario;
+                document.getElementById('agentTimeline').innerHTML = '';
+            });
+        });
+
+        document.getElementById('agentRunBtn')?.addEventListener('click', async () => {
+            if (agentRunning) return;
+            agentRunning = true;
+            const runBtn = document.getElementById('agentRunBtn');
+            runBtn.disabled = true;
+            runBtn.textContent = '⟳ Running...';
+
+            const timeline = document.getElementById('agentTimeline');
+            timeline.innerHTML = '';
+            const scenario = agentScenarios[activeScenario];
+
+            for (let i = 0; i < scenario.steps.length; i++) {
+                const step = scenario.steps[i];
+                const stepEl = document.createElement('div');
+                stepEl.className = 'agent-step';
+                stepEl.innerHTML = `
+                    <div class="agent-step-dot"></div>
+                    <div class="agent-step-label">${step.label}<span class="agent-concept-tag">${step.concept}</span></div>
+                    <div class="agent-step-content">${step.content}</div>
+                `;
+                timeline.appendChild(stepEl);
+
+                await new Promise(r => setTimeout(r, 150));
+                stepEl.classList.add('active');
+                stepEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+                await new Promise(r => setTimeout(r, 800 + step.content.length * 5));
+                stepEl.classList.remove('active');
+                stepEl.classList.add('done');
+            }
+
+            runBtn.disabled = false;
+            runBtn.textContent = '▶ Run Agent';
+            agentRunning = false;
+        });
+
+        // ══════════════════════════════════════════════════════════
+        // 3. INTERACTIVE CODE PLAYGROUND
+        // ══════════════════════════════════════════════════════════
+        const codeRunBtn = document.getElementById('codeRunBtn');
+        const codeOutput = document.getElementById('codeOutput');
+        const codeOutputBody = document.getElementById('codeOutputBody');
+        const codeRunStatus = document.getElementById('codeRunStatus');
+
+        const codeOutputLines = [
+            { text: '$ python rag_agent.py', cls: 'out-dim', delay: 300 },
+            { text: '', cls: '', delay: 200 },
+            { text: 'Initializing TestKnowledgeAgent...', cls: 'out-info', delay: 400 },
+            { text: '  → LLM: ChatOpenAI(model="gpt-4o", temperature=0.2)', cls: 'out-dim', delay: 300 },
+            { text: '  → Embeddings: text-embedding-3-large (3072 dims)', cls: 'out-dim', delay: 300 },
+            { text: '  → Connecting to Pinecone index "test-knowledge"...', cls: 'out-info', delay: 600 },
+            { text: '  ✓ Connected (1,247 vectors, dim=3072)', cls: 'out-success', delay: 400 },
+            { text: '  → Retriever: MMR search (k=8, fetch_k=20)', cls: 'out-dim', delay: 200 },
+            { text: '', cls: '', delay: 200 },
+            { text: 'Building agent with tools: [search_test_docs, generate_test_plan]', cls: 'out-info', delay: 500 },
+            { text: '', cls: '', delay: 200 },
+            { text: '▶ analyze_and_suggest(user_story="As a user, I want to reset my password...")', cls: 'out-warn', delay: 600 },
+            { text: '', cls: '', delay: 200 },
+            { text: '  [Agent] Thought: I need to search for existing test patterns for password reset flows', cls: 'out-data', delay: 500 },
+            { text: '  [Agent] Action: search_test_docs', cls: 'out-info', delay: 400 },
+            { text: '  [Agent] Action Input: "password reset email flow security requirements"', cls: 'out-dim', delay: 300 },
+            { text: '  → Embedding query... 12 tokens → [0.0234, -0.0891, 0.1247, ...]', cls: 'out-dim', delay: 500 },
+            { text: '  → Pinecone MMR search... 4 documents retrieved (23ms)', cls: 'out-dim', delay: 400 },
+            { text: '    doc_1: "password-reset-security.md" (score: 0.95)', cls: 'out-data', delay: 200 },
+            { text: '    doc_2: "auth-flow-patterns.md" (score: 0.89)', cls: 'out-data', delay: 200 },
+            { text: '    doc_3: "email-service-sla.md" (score: 0.85)', cls: 'out-data', delay: 200 },
+            { text: '    doc_4: "rate-limiting-policy.md" (score: 0.82)', cls: 'out-data', delay: 200 },
+            { text: '  [Agent] Observation: Found 4 relevant documents with security and SLA requirements', cls: 'out-data', delay: 400 },
+            { text: '', cls: '', delay: 200 },
+            { text: '  [Agent] Thought: Now I\'ll generate a test plan using the retrieved context', cls: 'out-data', delay: 400 },
+            { text: '  [Agent] Action: generate_test_plan', cls: 'out-info', delay: 300 },
+            { text: '  → Assembling context (1,847 tokens)...', cls: 'out-dim', delay: 400 },
+            { text: '  → Generating test plan with GPT-4o...', cls: 'out-info', delay: 800 },
+            { text: '', cls: '', delay: 200 },
+            { text: '  [Agent] Final Answer:', cls: 'out-success', delay: 300 },
+            { text: '  ┌─ Generated 8 test cases ─────────────────────────┐', cls: 'out-success', delay: 200 },
+            { text: '  │ 1. ✓ Happy path: email → reset link → new pwd   │', cls: 'out-success', delay: 150 },
+            { text: '  │ 2. ✓ Invalid email → validation error            │', cls: 'out-success', delay: 150 },
+            { text: '  │ 3. ✓ Unregistered email → generic message        │', cls: 'out-success', delay: 150 },
+            { text: '  │ 4. ✓ Expired token (>15min) → error              │', cls: 'out-success', delay: 150 },
+            { text: '  │ 5. ✓ Reused token → "already used"               │', cls: 'out-success', delay: 150 },
+            { text: '  │ 6. ✓ Rate limit (4th req/hr) → throttle          │', cls: 'out-success', delay: 150 },
+            { text: '  │ 7. ✓ Password complexity validation              │', cls: 'out-success', delay: 150 },
+            { text: '  │ 8. ✓ Email delivery SLA < 30s                    │', cls: 'out-success', delay: 150 },
+            { text: '  └─ Sources: 4 documents, coverage: 100% ──────────┘', cls: 'out-success', delay: 200 },
+            { text: '', cls: '', delay: 200 },
+            { text: 'Result: {test_cases: 8, sources: ["password-reset-security.md", ...]}', cls: 'out-info', delay: 400 },
+            { text: '✓ Agent execution completed in 3.2s', cls: 'out-success', delay: 300 },
+        ];
+
+        if (codeRunBtn) {
+            codeRunBtn.addEventListener('click', async () => {
+                codeRunBtn.disabled = true;
+                codeRunBtn.textContent = '⟳ Running...';
+                codeRunStatus.textContent = 'Executing rag_agent.py...';
+                codeOutputBody.innerHTML = '';
+                codeOutput.classList.add('visible');
+                codeOutput.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+                for (const line of codeOutputLines) {
+                    await new Promise(r => setTimeout(r, line.delay));
+                    const el = document.createElement('div');
+                    el.className = 'out-step ' + (line.cls || '');
+                    el.textContent = line.text || '\u00A0';
+                    codeOutputBody.appendChild(el);
+                    codeOutputBody.scrollTop = codeOutputBody.scrollHeight;
+                }
+
+                codeRunBtn.disabled = false;
+                codeRunBtn.textContent = '▶ Run';
+                codeRunStatus.textContent = '✓ Completed in 3.2s';
             });
         }
-        if (chatSuggestions) {
-            chatSuggestions.querySelectorAll('.chat-suggestion').forEach(btn => {
-                btn.addEventListener('click', () => sendMessage(btn.dataset.q));
-            });
+
+        // ══════════════════════════════════════════════════════════
+        // 4. ML METRICS DASHBOARD
+        // ══════════════════════════════════════════════════════════
+        const mlModels = {
+            gpt4o: {
+                name: 'GPT-4o',
+                metrics: { Accuracy: 0.96, Precision: 0.94, Recall: 0.97, 'F1 Score': 0.955 },
+                confusion: { tp: 487, fp: 13, fn: 8, tn: 492 },
+                cost: { 'Cost / 1K queries': '$4.80', 'Avg Latency': '1.2s', 'Tokens / query': '~850', 'Monthly cost (est.)': '$144' },
+                prod: { 'Uptime': '99.9%', 'Error rate': '0.3%', 'Cache hit rate': '42%', 'Throughput': '12 req/s' }
+            },
+            gpt4omini: {
+                name: 'GPT-4o-mini',
+                metrics: { Accuracy: 0.91, Precision: 0.89, Recall: 0.93, 'F1 Score': 0.91 },
+                confusion: { tp: 465, fp: 35, fn: 22, tn: 478 },
+                cost: { 'Cost / 1K queries': '$0.60', 'Avg Latency': '0.4s', 'Tokens / query': '~620', 'Monthly cost (est.)': '$18' },
+                prod: { 'Uptime': '99.95%', 'Error rate': '0.5%', 'Cache hit rate': '58%', 'Throughput': '45 req/s' }
+            },
+            finetuned: {
+                name: 'Fine-tuned (Custom)',
+                metrics: { Accuracy: 0.98, Precision: 0.97, Recall: 0.98, 'F1 Score': 0.975 },
+                confusion: { tp: 495, fp: 5, fn: 3, tn: 497 },
+                cost: { 'Cost / 1K queries': '$1.20', 'Avg Latency': '0.6s', 'Tokens / query': '~480', 'Monthly cost (est.)': '$36' },
+                prod: { 'Uptime': '99.8%', 'Error rate': '0.2%', 'Cache hit rate': '65%', 'Throughput': '32 req/s' }
+            }
+        };
+
+        function renderMLDashboard(modelKey) {
+            const m = mlModels[modelKey];
+            const metricColors = { Accuracy: '#22c55e', Precision: '#60a5fa', Recall: '#a78bfa', 'F1 Score': '#f59e0b' };
+
+            document.getElementById('mlMetricsRows').innerHTML = Object.entries(m.metrics).map(([k, v]) => `
+                <div class="ml-metric-row">
+                    <span class="ml-metric-label">${k}</span>
+                    <span>
+                        <span class="ml-metric-value">${(v * 100).toFixed(1)}%</span>
+                        <span class="ml-metric-bar"><span class="ml-metric-fill" style="width:${v * 100}%;background:${metricColors[k] || '#60a5fa'}"></span></span>
+                    </span>
+                </div>
+            `).join('');
+
+            const c = m.confusion;
+            const maxVal = Math.max(c.tp, c.fp, c.fn, c.tn);
+            const cellColor = (val, isGood) => {
+                const intensity = val / maxVal;
+                return isGood
+                    ? `rgba(34, 197, 94, ${0.1 + intensity * 0.4})`
+                    : `rgba(239, 68, 68, ${0.1 + intensity * 0.4})`;
+            };
+            document.getElementById('confusionGrid').innerHTML = `
+                <div class="confusion-corner"></div>
+                <div class="confusion-header">Pred +</div>
+                <div class="confusion-header">Pred −</div>
+                <div class="confusion-header">Actual +</div>
+                <div class="confusion-cell" style="background:${cellColor(c.tp, true)};color:#22c55e">${c.tp}</div>
+                <div class="confusion-cell" style="background:${cellColor(c.fn, false)};color:#ef4444">${c.fn}</div>
+                <div class="confusion-header">Actual −</div>
+                <div class="confusion-cell" style="background:${cellColor(c.fp, false)};color:#ef4444">${c.fp}</div>
+                <div class="confusion-cell" style="background:${cellColor(c.tn, true)};color:#22c55e">${c.tn}</div>
+            `;
+
+            document.getElementById('mlCostRows').innerHTML = Object.entries(m.cost).map(([k, v]) => `
+                <div class="ml-metric-row"><span class="ml-metric-label">${k}</span><span class="ml-metric-value">${v}</span></div>
+            `).join('');
+
+            document.getElementById('mlProdRows').innerHTML = Object.entries(m.prod).map(([k, v]) => `
+                <div class="ml-metric-row"><span class="ml-metric-label">${k}</span><span class="ml-metric-value">${v}</span></div>
+            `).join('');
         }
+
+        document.querySelectorAll('.ml-model-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.ml-model-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                renderMLDashboard(btn.dataset.model);
+            });
+        });
+        renderMLDashboard('gpt4o');
+
+        // ══════════════════════════════════════════════════════════
+        // 5. ARCHITECTURE DIAGRAMS ON PROJECT CARDS
+        // ══════════════════════════════════════════════════════════
+        const archDiagrams = {
+            'AI-Powered Test Generation Agent': [
+                { icon: '👤', name: 'User Story', sub: 'Input' },
+                { icon: '🔤', name: 'Embed', sub: 'text-embedding-3' },
+                { icon: '🌲', name: 'Pinecone', sub: 'Vector Search', highlight: true },
+                { icon: '📄', name: 'Context', sub: 'Top-K Docs' },
+                { icon: '🤖', name: 'LangChain Agent', sub: 'GPT-4o + Tools', highlight: true },
+                { icon: '✅', name: 'Test Cases', sub: 'Output' }
+            ],
+            'Enterprise RAG Chatbot Platform': [
+                { icon: '📁', name: 'Documents', sub: 'Ingestion' },
+                { icon: '✂️', name: 'Chunking', sub: 'LlamaIndex' },
+                { icon: '🔤', name: 'Embed', sub: 'OpenAI' },
+                { icon: '🗄️', name: 'pgvector', sub: 'Vector Store', highlight: true },
+                { icon: '🔍', name: 'Retrieval', sub: 'Semantic Search' },
+                { icon: '🤖', name: 'LLM', sub: 'GPT-4o', highlight: true },
+                { icon: '💬', name: 'Response', sub: 'With Sources' }
+            ],
+            'ML-Driven Flaky Test Detector': [
+                { icon: '📊', name: 'CI Logs', sub: 'Data Source' },
+                { icon: '🔧', name: 'Preprocess', sub: 'Tokenize + Clean' },
+                { icon: '🧠', name: 'TensorFlow', sub: 'NLP Model', highlight: true },
+                { icon: '📈', name: 'Train', sub: 'Fine-tune' },
+                { icon: '🎯', name: 'Classify', sub: 'Flaky/Stable', highlight: true },
+                { icon: '🚀', name: 'MLOps', sub: 'Deploy + Monitor' }
+            ]
+        };
+
+        document.querySelectorAll('.project-card').forEach(card => {
+            const titleEl = card.querySelector('h3');
+            if (!titleEl) return;
+            const title = titleEl.textContent.trim();
+            const diagram = archDiagrams[title];
+            if (!diagram) return;
+
+            const toggleBtn = document.createElement('button');
+            toggleBtn.className = 'arch-toggle';
+            toggleBtn.innerHTML = '🏗️ View Architecture';
+
+            const diagramDiv = document.createElement('div');
+            diagramDiv.className = 'arch-diagram';
+            const flowDiv = document.createElement('div');
+            flowDiv.className = 'arch-flow';
+            diagram.forEach((node, i) => {
+                if (i > 0) {
+                    const arrow = document.createElement('span');
+                    arrow.className = 'arch-arrow';
+                    arrow.textContent = '→';
+                    flowDiv.appendChild(arrow);
+                }
+                const nodeEl = document.createElement('div');
+                nodeEl.className = 'arch-node' + (node.highlight ? ' highlight' : '');
+                nodeEl.innerHTML = `<span class="arch-icon">${node.icon}</span>${node.name}<div class="arch-sub">${node.sub}</div>`;
+                flowDiv.appendChild(nodeEl);
+            });
+            diagramDiv.appendChild(flowDiv);
+
+            toggleBtn.addEventListener('click', () => {
+                const isOpen = diagramDiv.classList.toggle('open');
+                toggleBtn.innerHTML = isOpen ? '🏗️ Hide Architecture' : '🏗️ View Architecture';
+            });
+
+            card.appendChild(toggleBtn);
+            card.appendChild(diagramDiv);
+        });
 
         }); // End DOMContentLoaded
     </script>
